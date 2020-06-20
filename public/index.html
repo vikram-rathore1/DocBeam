@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BeamCollab</title>
+    <link rel="stylesheet" href="/node_modules/codemirror/lib/codemirror.css">
+    <style>
+        .CodeMirror { height: auto; border: 1px solid #ddd; }
+        .CodeMirror-scroll { max-height: 200px; }
+        .CodeMirror pre { padding-left: 7px; line-height: 1.25; }
+        .banner { background: #ffc; padding: 6px; border-bottom: 2px solid silver;  }
+        .banner div { margin: 0 auto; max-width: 700px; text-align: center; }
+    </style>
+</head>
+<body>
+
+<select name="" id="languageSelect" onchange="selectLanguage()">
+    <option value="" selected>Plain Text</option>
+    <option value="text/html">HTML</option>
+    <option value="text/css">CSS</option>
+    <option value="text/javascript">Javascript</option>
+    <option value="application/json">JSON</option>
+</select>
+<input type="text" id="beamDocTitle" onchange="changeTitle(this)" style="display: block;">
+<textarea id="beamDocEditor">
+</textarea>
+
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/node_modules/codemirror/lib/codemirror.js"></script>
+<script src="/node_modules/codemirror/mode/xml/xml.js"></script>
+<script src="/node_modules/codemirror/mode/javascript/javascript.js"></script>
+<script src="/node_modules/codemirror/mode/css/css.js"></script>
+<script src="/node_modules/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+<script src="/scripts/diff_match_patch.js"></script>
+<script src="/scripts/automerge.js"></script>
+<script src="/scripts/utils.js"></script>
+<script src="/scripts/beamdoc.js"></script>
+<script src="/scripts/script.js"></script>
+</html>
