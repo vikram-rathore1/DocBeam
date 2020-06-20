@@ -31,3 +31,15 @@ function init() {
 }
 
 init();
+
+
+// http://collabedit.com/a2k79
+// todo: auth (browser cache)
+// todo: redis, persist doc
+// todo: UI, editor size/scroll
+// todo: intelligent cursor preservation
+// todo: validate title length etc
+// todo: deploy + test
+// todo: broadcast cursor/selection
+// todo: online status, show collaborators online/offline, xyz connected, abc disconnected
+// todo: chat, history (xyz made changes <show> )

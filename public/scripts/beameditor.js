@@ -33,9 +33,10 @@ function BeamEditor(doc, socket, languageSelect, title, textArea) {
     });
 
     this.refresh = function() {
-        // todo: preserve cursor position as well
+        // sync title
         title.value = doc.getTitle();
 
+        // sync language
         let opts = languageSelect.options;
         for (let i = 0; i < opts.length; i++) {
             if (opts[i].value === doc.getLanguage()) {
@@ -44,8 +45,11 @@ function BeamEditor(doc, socket, languageSelect, title, textArea) {
             }
         }
 
+        // sync text
+        let cursorPos = editor.getCursor();
         editor.setValue(doc.getText());
         editor.setOption('mode', languageSelect.value);
+        editor.setCursor(cursorPos);
     };
 
 }
