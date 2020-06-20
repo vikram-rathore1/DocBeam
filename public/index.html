@@ -13,14 +13,14 @@
 </head>
 <body>
 
-<select name="" id="languageSelect" onchange="selectLanguage()">
+<select name="" id="languageSelect">
     <option value="" selected>Plain Text</option>
     <option value="text/html">HTML</option>
     <option value="text/css">CSS</option>
     <option value="text/javascript">Javascript</option>
     <option value="application/json">JSON</option>
 </select>
-<input type="text" id="beamDocTitle" onchange="changeTitle(this)" style="display: block;">
+<input type="text" id="beamDocTitle" style="display: block;">
 <textarea id="beamDocEditor">
 </textarea>
 
@@ -35,5 +35,6 @@
 <script src="/scripts/automerge.js"></script>
 <script src="/scripts/utils.js"></script>
 <script src="/scripts/beamdoc.js"></script>
+<script src="/scripts/beameditor.js"></script>
 <script src="/scripts/script.js"></script>
 </html>
