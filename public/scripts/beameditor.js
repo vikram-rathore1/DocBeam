@@ -5,7 +5,8 @@ function BeamEditor(doc, socket, languageSelect, title, textArea) {
         mode: doc.getLanguage(),
         matchBrackets: true,
         showCursorWhenSelecting: true,
-        cursorHeight: 0.85
+        cursorHeight: 1,
+        styleSelectedText: true
     });
 
     editor.on("change", function (ins, changeObj) {
@@ -46,10 +47,43 @@ function BeamEditor(doc, socket, languageSelect, title, textArea) {
         }
 
         // sync text
-        let cursorPos = editor.getCursor();
+        let cursorPos = getNewCursorPos(this.getCursorIndex(), editor.getValue(), doc.getText());
         editor.setValue(doc.getText());
         editor.setOption('mode', languageSelect.value);
         editor.setCursor(cursorPos);
+
+
+
+        // Experimental code below
+        // editor.markText({line: 0, ch: 1}, {line: 1, ch: 4}, {className: "styled-background"});
+        //
+        // const peerCursorPos = {line: 1, ch: 4};
+        // const peerCursorCoords = editor.cursorCoords(peerCursorPos);
+        // const cursorElement = document.createElement('span');
+        // cursorElement.style.borderLeftStyle = 'solid';
+        // cursorElement.style.borderLeftWidth = '2px';
+        // cursorElement.style.borderLeftColor = '#ff0000';
+        // cursorElement.style.height = `${(peerCursorCoords.bottom - peerCursorCoords.top)}px`;
+        // cursorElement.style.padding = 0;
+        // cursorElement.style.zIndex = 0;
+        // let marker = editor.setBookmark(peerCursorPos, { widget: cursorElement });
+        // marker.clear();
     };
+
+    // Find out index of position where cursor is, assuming text is 1-d string
+    this.getCursorIndex = function() {
+        let cursorPos = editor.getCursor();
+        let cursorIndex = cursorPos.ch;
+        let line = 0;
+        while (line < cursorPos.line) {
+            cursorIndex += editor.lineInfo(line).text.length + 1;
+            line += 1;
+        }
+        return cursorIndex;
+    };
+
+    this.getEditorInstance = function() {
+        return editor;
+    }
 
 }
