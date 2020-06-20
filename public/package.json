@@ -10,8 +10,5 @@
   "license": "ISC",
   "dependencies": {
     "codemirror": "^5.54.0"
-  },
-  "engines": {
-    "node": "12.18.0"
   }
 }
