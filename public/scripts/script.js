@@ -27,7 +27,7 @@ function init() {
 
     // Peer cursor
     socket.on('cursor_activity', function(msg) {
-        editor.showPeerCursor(msg);
+        editor.showPeerCursorActivity(msg);
     });
 
     // Emit event to join document
@@ -49,3 +49,19 @@ init();
 // todo: broadcast cursor/selection
 // todo: online status, show collaborators online/offline, xyz connected, abc disconnected
 // todo: chat, history (xyz made changes <show> )
+
+
+
+/*
+- collab edit (CRDT + WebRTC)
+- multiple types of lang supported
+- multiple tabs supported
+- Create new file (in another tab, enter filename ques1 -> it shows as ques1.cpp on tab name, changes to ques1.js if language changed to js)
+
+- git-diff algo to broadcast compressed updates (reduce network packet size)
+
+
+- collabedit uses long polling
+- collabedit uses OT
+- collabedit does not show other person's cursor positions / selections (like google docs does)
+ */
