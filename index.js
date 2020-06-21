@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
-const Automerge = require('./dep/automerge');
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+const path = require('path');
+const PORT = process.env.PORT || 5000;
+const Automerge = require('automerge');
 
-app.use(express.static('public'));
+server.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
 let docs = {
     asda: {
@@ -13,12 +15,17 @@ let docs = {
     }
 };
 
-app.get('/doc/:documentId', (req, res) => {
-    console.log('doc id: ' + req.params.documentId);
-    if (req.params.documentId in docs)
-        res.sendFile(__dirname + '/public/index.html');
-    else res.send('Not found');
-});
+app
+  .use(express.static(path.join(__dirname, 'public')))
+  .set('views', path.join(__dirname, 'views'))
+  .set('view engine', 'ejs')
+  .get('/', (req, res) => res.render('pages/index'))
+  .get('/:documentId', (req, res) => {
+      if (req.params.documentId in docs)
+          res.render('pages/editor');
+      else res.send('Not found');
+  });
+
 
 io.on('connection', (socket) => {
     console.log('a user connected');
@@ -56,8 +63,4 @@ io.on('connection', (socket) => {
         }
     });
 
-});
-
-http.listen(5000, () => {
-    console.log('listening on *:5000');
 });

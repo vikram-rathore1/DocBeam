@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DocBeam | Another cool collaborative text editor</title>
+    <% include ../partials/header.ejs %>
+    <% include ../partials/editorHeader.ejs %>
+</head>
+
+<body class="container" style="padding: 20px;">
+
+<div class="row">
+    <div class="col-md-9">
+        <input type="text" id="beamDocTitle" class="form-control" placeholder="Document Title">
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-md-9">
+        <textarea id="beamDocEditor"></textarea>
+    </div>
+
+    <div class="col-md-3">
+        <select name="" id="languageSelect" class="form-control">
+            <option value="" selected>Plain Text</option>
+            <option value="text/html">HTML</option>
+            <option value="text/css">CSS</option>
+            <option value="text/javascript">Javascript</option>
+            <option value="application/json">JSON</option>
+        </select>
+
+        <div id="greybox" style="display: block; height: 200px; margin-top: 30px; background: #ccc;"></div>
+    </div>
+
+
+</div>
+
+<script src="/scripts/script.js"></script>
+</body>
+</html>
