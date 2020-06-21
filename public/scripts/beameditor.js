@@ -1,13 +1,19 @@
 function BeamEditor(doc, socket, languageSelect, title, textArea) {
 
+    const blinkRate = 500;
+
     let editor = CodeMirror.fromTextArea(textArea, {
         lineNumbers: true,
         mode: doc.getLanguage(),
         matchBrackets: true,
         showCursorWhenSelecting: true,
         cursorHeight: 1,
-        styleSelectedText: true
+        styleSelectedText: true,
+        cursorBlinkRate: blinkRate
     });
+
+    let marker = undefined;
+    let markerInterval = undefined;
 
     editor.on("change", function (ins, changeObj) {
         if (doc.getText() === ins.getValue()) return;   // Change event triggered by replication or no changes (paste same text over)
@@ -17,7 +23,7 @@ function BeamEditor(doc, socket, languageSelect, title, textArea) {
     });
 
     editor.on("cursorActivity", function (ins) {
-        // console.log(ins.getCursor().line, ins.getCursor().ch, ins.getSelection());
+        socket.emit('cursor_activity', {cursorRow: ins.getCursor().line, cursorCol: ins.getCursor().ch, selection: ins.getSelection()});
     });
 
     title.addEventListener('change', function() {
@@ -51,23 +57,6 @@ function BeamEditor(doc, socket, languageSelect, title, textArea) {
         editor.setValue(doc.getText());
         editor.setOption('mode', languageSelect.value);
         editor.setCursor(cursorPos);
-
-
-
-        // Experimental code below
-        // editor.markText({line: 0, ch: 1}, {line: 1, ch: 4}, {className: "styled-background"});
-        //
-        // const peerCursorPos = {line: 1, ch: 4};
-        // const peerCursorCoords = editor.cursorCoords(peerCursorPos);
-        // const cursorElement = document.createElement('span');
-        // cursorElement.style.borderLeftStyle = 'solid';
-        // cursorElement.style.borderLeftWidth = '2px';
-        // cursorElement.style.borderLeftColor = '#ff0000';
-        // cursorElement.style.height = `${(peerCursorCoords.bottom - peerCursorCoords.top)}px`;
-        // cursorElement.style.padding = 0;
-        // cursorElement.style.zIndex = 0;
-        // let marker = editor.setBookmark(peerCursorPos, { widget: cursorElement });
-        // marker.clear();
     };
 
     // Find out index of position where cursor is, assuming text is 1-d string
@@ -82,8 +71,45 @@ function BeamEditor(doc, socket, languageSelect, title, textArea) {
         return cursorIndex;
     };
 
+    this.showPeerCursor = function(cursorInfo) {
+        if (marker !== undefined) marker.clear();
+        const peerCursorPos = {line: cursorInfo.cursorRow, ch: cursorInfo.cursorCol};
+        const peerCursorCoords = editor.cursorCoords(peerCursorPos);
+        const cursorElement = document.createElement('span');
+        cursorElement.className = 'peer-cursor';
+        cursorElement.attributes.peer = 'Vikram Singh';     // name of peer
+        cursorElement.style.borderLeftColor = '#ff0000';    // todo: different colors based on person
+        cursorElement.style.height = `${(peerCursorCoords.bottom - peerCursorCoords.top)}px`;
+        marker = editor.setBookmark(peerCursorPos, { widget: cursorElement });
+        blinkPeerCursor(cursorElement);
+    };
+
     this.getEditorInstance = function() {
         return editor;
+    };
+
+    function blinkPeerCursor(cursor) {
+
+        // todo: Add hover tooltip (complete the block below)
+        cursor.addEventListener('mouseover', function () {
+            console.log(cursorElement.attributes.peer);
+        });
+
+        let show = true;
+        markerInterval = setInterval(() => {
+            if(show) {
+                cursor.style.visibility = 'hidden';
+                show = false;
+            } else {
+                cursor.style.visibility = 'visible';
+                show = true;
+            }
+        }, blinkRate);
     }
 
 }
+
+
+// Experimental code below
+// editor.markText({line: 0, ch: 1}, {line: 1, ch: 4}, {className: "styled-background"});
+//

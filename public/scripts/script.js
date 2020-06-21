@@ -25,6 +25,11 @@ function init() {
         editor.refresh();
     });
 
+    // Peer cursor
+    socket.on('cursor_activity', function(msg) {
+        editor.showPeerCursor(msg);
+    });
+
     // Emit event to join document
     socket.emit('join_document', {docId: docId, state: doc.getStateString()});
 
@@ -35,6 +40,7 @@ init();
 
 // http://collabedit.com/a2k79
 // todo: auth (browser cache)
+// todo: missed events catchup, offline editing (lossless, sync & merge whenever online)
 // todo: redis, persist doc
 // todo: UI, editor size/scroll
 // todo: intelligent cursor preservation

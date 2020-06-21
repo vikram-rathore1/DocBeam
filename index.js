@@ -36,6 +36,10 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('crdt_changes', msg);
     });
 
+    socket.on('cursor_activity', (msg) => {
+        socket.broadcast.emit('cursor_activity', msg);
+    });
+
     socket.on('join_document', (msg) => {
         console.log('Someone wants to join document ' + msg.docId);
         if (msg.docId in docs) {
