@@ -13,6 +13,9 @@
   .jumbotron .btn-primary {
     background: #27AE60;
     border-color: #229954; }
+  .jumbotron mark {
+    padding: 0;
+  }
   .jumbotron .btn-primary:hover {
       background: #1E8449; }
   .jumbotron p {
