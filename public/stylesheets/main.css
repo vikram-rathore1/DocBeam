@@ -1,21 +1,22 @@
   body {
     font-family: 'Operator Mono', 'Source Code Pro', Menlo, Monaco, Consolas, Courier New, monospace;
     /*background: #2C3E50;*/
+    background: #F0F3F4;
   }
   .jumbotron {
     /*background: #532F8C;*/
-    background: #212F3D;
+    /*background: #212F3D;*/
     text-align: left;
-    color: white;
+    color: #27AE60;
     padding-bottom: 80px; }
   .intro { height: 100%; width: 100%; position: fixed; }
   .jumbotron .btn-primary {
-    background: #845ac7;
-    border-color: #845ac7; }
+    background: #27AE60;
+    border-color: #229954; }
   .jumbotron .btn-primary:hover {
-      background: #7646c1; }
+      background: #1E8449; }
   .jumbotron p {
-    color: #d9ccee;
+    /*color: #d9ccee;*/
     /*max-width: 75%;*/
     margin: 1em auto 2em; }
   #introHeading {
@@ -62,58 +63,13 @@
     }
   .blinking-cursor {
     font-weight: 100;
-    /*font-size: 30px;*/
     color: #2E3D48;
     color: #ccc;
-    /*-webkit-animation: 0.4s blink step-end infinite;*/
-    /*-moz-animation: 0.4s blink step-end infinite;*/
-    /*-ms-animation: 0.4s blink step-end infinite;*/
-    /*-o-animation: 0.4s blink step-end infinite;*/
-    /*animation: 0.4s blink step-end infinite;*/
   }
-
-  @keyframes "blink" {
-    from, to {
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
-
-  @-moz-keyframes blink {
-    from, to {
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
-
-  @-webkit-keyframes "blink" {
-    from, to {
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
-
-  @-ms-keyframes "blink" {
-    from, to {
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
-
-  @-o-keyframes "blink" {
-    from, to {
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-    }
+  .CodeMirror {
+    border-radius: 5px;
+    -webkit-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    border: 1px solid #eeeeee;
   }
 
