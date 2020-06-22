@@ -8,10 +8,39 @@
 
 <body class="container" style="padding: 20px;">
 
+<!--<div class="row">-->
+<!--    <div class="col-md-9 action-buttons">-->
+<!--        <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-nodejs"><span class="glyphicon glyphicon-flash"></span> Create a new document</a>-->
+<!--        <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/node-js-getting-started"><span class="glyphicon glyphicon-download"></span> Join a document</a>-->
+<!--&lt;!&ndash;        <input type="text" id="beamDocTitle" class="" placeholder="Document Title">&ndash;&gt;-->
+<!--    </div>-->
+<!--</div>-->
+
 <div class="row">
-    <div class="col-md-9">
-<!--        <input type="text" id="beamDocTitle" class="" placeholder="Document Title">-->
+
+    <div class="col-md-9 editor-header">
+
+<!--        <span class="label label-warning">http://docbeam.io/kRjui6Pq&nbsp;<span class="glyphicon glyphicon-duplicate"></span></span>-->
+
+        <div class="row">
+            <div class="col-md-6">
+                <b>Document link: </b>
+                <a type="button" href="https://github.com/heroku/node-js-getting-started">http://docbeam.io/kRjui6Pq&nbsp;<span class="glyphicon glyphicon-duplicate"></span></a>
+            </div>
+            <div class="col-md-6 align-right">
+                <b>Language: </b>
+                <select name="" id="languageSelect">
+                    <option value="" selected>Plain Text</option>
+                    <option value="text/html">HTML</option>
+                    <option value="text/css">CSS</option>
+                    <option value="text/javascript">Javascript</option>
+                    <option value="application/json">JSON</option>
+                </select>
+            </div>
+        </div>
+
     </div>
+
 </div>
 
 <div class="row">
@@ -20,19 +49,15 @@
         <textarea id="beamDocEditor"></textarea>
     </div>
 
-    <div class="col-md-3">
-        <select name="" id="languageSelect" class="form-control">
-            <option value="" selected>Plain Text</option>
-            <option value="text/html">HTML</option>
-            <option value="text/css">CSS</option>
-            <option value="text/javascript">Javascript</option>
-            <option value="application/json">JSON</option>
-        </select>
 
-        <div id="greybox" style="display: block; height: 200px; margin-top: 30px; background: #ccc;"></div>
+</div>
+
+<div class="row">
+    <div class="col-md-9 action-buttons">
+        <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-nodejs"><span class="glyphicon glyphicon-flash"></span> Create a new document</a>
+        <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/node-js-getting-started"><span class="glyphicon glyphicon-download"></span> Join a document</a>
+        <input type="text" id="beamDocTitle" class="" placeholder="Document Title" style="display: none;">
     </div>
-
-
 </div>
 
 <script src="/scripts/script.js"></script>

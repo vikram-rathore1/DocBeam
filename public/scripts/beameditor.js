@@ -9,7 +9,8 @@ function BeamEditor(doc, socket, languageSelect, title, textArea) {
         showCursorWhenSelecting: true,
         cursorHeight: 1,
         styleSelectedText: true,
-        cursorBlinkRate: blinkRate
+        cursorBlinkRate: blinkRate,
+        viewportMargin: Infinity
     });
 
     let marker = undefined;

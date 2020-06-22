@@ -10,15 +10,15 @@
     color: #27AE60;
     padding-bottom: 80px; }
   .intro { height: 100%; width: 100%; position: fixed; }
-  .jumbotron .btn-primary {
+  .btn-primary {
     background: #27AE60;
     border-color: #229954; }
+  .btn-primary:hover {
+    background: #1E8449; }
   .jumbotron mark {
     padding: 0;
     background: #A9DFBF;
   }
-  .jumbotron .btn-primary:hover {
-      background: #1E8449; }
   .jumbotron p {
     /*color: #d9ccee;*/
     /*max-width: 75%;*/
@@ -53,7 +53,7 @@
     .jumbotron .lang-logo img {
       max-width: 100%; }
 
-    .CodeMirror { height: auto; border: 1px solid #ddd; font-size: 12px; min-height: 500px; }
+    .CodeMirror { height: auto; border: 1px solid #ddd; font-size: 12px; min-height: 600px; }
     .CodeMirror pre { padding-left: 7px; line-height: 1.25; }
     .banner { background: #ffc; padding: 6px; border-bottom: 2px solid silver;  }
     .banner div { margin: 0 auto; max-width: 700px; text-align: center; }
@@ -75,5 +75,22 @@
     -webkit-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     border: 1px solid #eeeeee;
+  }
+  .action-buttons {
+    margin: 20px 0;
+    text-align: left;
+  }
+  .editor-header {
+    margin: 10px 0;
+  }
+  .editor-header a, .editor-header b, .editor-header select {
+    padding: 5px 0;
+  }
+  .editor-header select, .editor-header select:focus, .editor-header select:hover {
+    border: none;
+    outline-color: transparent;
+  }
+  .align-right {
+    text-align: right;
   }
 
