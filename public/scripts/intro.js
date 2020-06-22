@@ -578,7 +578,7 @@ let buttonExplanationScript = [
 let introScripts = [
     ['introHeading', introHeadingScript, '<span class="peer-cursor" style="border-left:4px solid #2ECC71; height:1em;"></span>', '<span class="peer-cursor" style="border-left:4px solid #C70039; height:1em;"></span>'],
     ['muchExpectedFeatureList', muchExpectedFeatureListScript, '<span class="peer-cursor" style="border-left:2px solid #2ECC71; height:1.4em;"></span>', '<span class="peer-cursor" style="border-left:2px solid #C70039; height:1.4em;"></span>'],
-    ['buttonExplanation', buttonExplanationScript, '<span class="peer-cursor" style="border-left:2px solid #2ECC71; height:1.4em;"></span>', '<span class="peer-cursor" style="border-left:2px solid #C70039; height:1.4em;"></span>'],
+    // ['buttonExplanation', buttonExplanationScript, '<span class="peer-cursor" style="border-left:2px solid #2ECC71; height:1.4em;"></span>', '<span class="peer-cursor" style="border-left:2px solid #C70039; height:1.4em;"></span>'],
 ];
 
 function typeIntro(id, index) {
