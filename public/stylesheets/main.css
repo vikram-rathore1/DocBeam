@@ -53,8 +53,9 @@
     .jumbotron .lang-logo img {
       max-width: 100%; }
 
-    .CodeMirror { height: auto; border: 1px solid #ddd; font-size: 12px; min-height: 600px; }
+    .CodeMirror { border: 1px solid #ddd; font-size: 12px; min-height: 600px; }
     .CodeMirror pre { padding-left: 7px; line-height: 1.25; }
+    .CodeMirror-gutters { border-right: none; }
     .banner { background: #ffc; padding: 6px; border-bottom: 2px solid silver;  }
     .banner div { margin: 0 auto; max-width: 700px; text-align: center; }
     #beamDocTitle { display: block; margin-bottom: 20px; }
@@ -89,8 +90,62 @@
   .editor-header select, .editor-header select:focus, .editor-header select:hover {
     border: none;
     outline-color: transparent;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
   }
   .align-right {
     text-align: right;
+  }
+  /*.peer-avatar {*/
+  /*  display: inline-block;*/
+  /*  border-radius: 1em;*/
+  /*  margin-right: 5px;*/
+  /*  width: 1em;*/
+  /*  height: 1em;*/
+  /*}*/
+  .right-section {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    margin-bottom: 35px;
+  }
+  .right-section .ui-text {
+    color: #999;
+    font-size: 12px;
+  }
+  .section-heading {
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+  }
+  #peer-list {
+    /*border-bottom: 1px solid #ddd;*/
+    /*padding: 15px 0;*/
+    /*margin-bottom: 15px;*/
+  }
+  .peer-label {
+    padding-right: 10px;
+    padding-left: 10px;
+    cursor: pointer;
+    /*font-weight: normal;*/
+  }
+  .chat-message-wrapper {
+    margin: 10px -10px;
+  }
+  .chat-message {
+
+    padding: 15px 10px;
+    font-size: 12px;
+    background: #fff;
+    border-radius: 15px;
+    -webkit-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
+  #chat-message-input {
+    margin: 20px -10px;
+  }
+  #chat-message-input input {
+    padding: 10px;
+    display: block;
+    width: 100%;
   }
 
