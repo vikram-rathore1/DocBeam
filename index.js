@@ -34,7 +34,7 @@ app
 io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
-        if (!socket.id in socketMap) return;
+        if (socketMap[socket.id] === undefined) return;
         let docId = socketMap[socket.id].docId;
         let alias = socketMap[socket.id].alias;
         let changes = docStore.leaveDoc(docId, alias);
