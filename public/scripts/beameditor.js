@@ -32,11 +32,11 @@ function BeamEditor(doc, socket, languageSelect, title, textArea) {
         });
     });
 
-    title.addEventListener('change', function() {
-        doc.setTitle(title.value, function(st, ch) {
-            socket.emit('crdt_changes', {docId: docId, changes: ch});
-        });
-    });
+    // title.addEventListener('change', function() {
+    //     doc.setTitle(title.value, function(st, ch) {
+    //         socket.emit('crdt_changes', {docId: docId, changes: ch});
+    //     });
+    // });
 
     languageSelect.addEventListener('change', function() {
         editor.setOption('mode', languageSelect.value);
@@ -47,7 +47,7 @@ function BeamEditor(doc, socket, languageSelect, title, textArea) {
 
     this.refresh = function() {
         // sync title
-        title.value = doc.getTitle();
+        // title.value = doc.getTitle();
 
         // sync language
         let opts = languageSelect.options;
