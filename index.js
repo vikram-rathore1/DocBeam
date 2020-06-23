@@ -4,11 +4,11 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const path = require('path');
 const PORT = process.env.PORT || 5000;
-const Automerge = require('automerge');
+const docStore = require('./lib/DocumentStore')();
+const utils = require('./lib/utils');
 
 server.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
-let docStore = new DocumentStore();
 let socketMap = {};
 
 app
@@ -17,8 +17,8 @@ app
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
   .get('/new', (req, res) => {
-      let id = randomId(6);
-      while (docStore.docExists(id)) id = randomId(6);
+      let id = utils.randomId(6);
+      while (docStore.docExists(id)) id = utils.randomId(6);
       docStore.addDoc(id);
       res.writeHead(302, {
           'Location': '/' + id
@@ -72,105 +72,6 @@ io.on('connection', (socket) => {
     });
 
 });
-
-function randomId(length) {
-    let result = '';
-    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-}
-
-function BeamDoc() {
-
-    let state = Automerge.from({
-        title: new Automerge.Text(''),
-        text: new Automerge.Text('First text'),
-        language: 'text',
-        chats: [],
-        collabs: {},
-        creator: ''
-    });
-
-    this.getStateString = function() {
-        return Automerge.save(state);
-    };
-
-    this.applyChanges = function(changes) {
-        Automerge.applyChanges(state, changes);
-    };
-
-    this.join = function(collabName, collabState) {
-        state = Automerge.merge(state, Automerge.load(collabState));
-        if (state.creator === '') {
-            state = Automerge.change(state, doc => {
-                doc.creator = collabName;
-                doc.chats.push({sender: collabName, message: 'Created the document', type: 'system'});
-                doc.collabs[collabName] = {online: true, color: getRandomColor()};
-            });
-        } else {
-            state = Automerge.change(state, doc => {
-                doc.chats.push({sender: collabName, message: 'Joined the document', type: 'system'});
-                if (collabName in doc.collabs) doc.collabs[collabName].online = true;
-                else doc.collabs[collabName] = {online: true, color: getRandomColor()};
-            });
-        }
-        // console.log(JSON.stringify(state));
-    };
-
-    this.leave = function(alias) {
-        let newState = Automerge.change(state, doc => {
-            if (alias in doc.collabs) {
-                doc.collabs[alias].online = false;
-                doc.chats.push({sender: alias, message: 'Left the document', type: 'system'});
-            }
-        });
-        let changes = JSON.stringify(Automerge.getChanges(state, newState));
-        state = newState;
-        return changes;
-    };
-
-}
-
-function DocumentStore() {
-
-    let docs = {};
-
-    this.addDoc = function (docId) {
-        docs[docId] = new BeamDoc();
-    };
-
-    this.docExists = function(docId) {
-        return (docs[docId] !== undefined);
-    };
-
-    this.getDocState = function(docId) {
-        if (!this.docExists(docId)) return '';
-        return docs[docId].getStateString();
-    };
-
-    this.applyChanges = function(docId, changes) {
-        if (!this.docExists(docId)) return;
-        docs[docId].applyChanges(changes);
-    };
-
-    this.joinDoc = function(docId, alias, state) {
-        if (!this.docExists(docId)) return;
-        docs[docId].join(alias, state);
-    };
-
-    this.leaveDoc = function(docId, alias) {
-        if (!this.docExists(docId)) return null;
-        return docs[docId].leave(alias);
-    };
-
-}
-
-function getRandomColor() {
-    return '#cccccc';
-}
 
 // let params = JSON.parse(socket.handshake.query.params);
 // console.log(params.alias + ' joined on document ' + params.docId + ', socket: ' + socket.id);
