@@ -5,38 +5,51 @@ const languageSelectId = 'languageSelect';
 const titleId = 'beamDocTitle';
 const editorTextAreaId = 'beamDocEditor';
 const docId = window.location.pathname.split('/').slice(-1)[0];   // last elem of split by '/'
+const alias = getUserAlias(docId);
 
 let socket = io();
-let doc = new BeamDoc(defaultTitle, defaultText, defaultLang);
-let editor = new BeamEditor(doc, socket, document.getElementById(languageSelectId), document.getElementById(titleId), document.getElementById(editorTextAreaId));
-editor.refresh();
+let doc;
+let editor;
 
 function init() {
+
+    doc = new BeamDoc(defaultTitle, defaultText, defaultLang);
+    editor = new BeamEditor(doc, socket, document.getElementById(languageSelectId), document.getElementById(titleId), document.getElementById(editorTextAreaId));
 
     socket.on('crdt_changes', function(msg) {
         if (msg.docId !== docId) return;
         doc.applyChanges(msg.changes);
         editor.refresh();
+        console.log('Crdt changes:');
+        console.log(msg);
     });
 
     // React to catch_up event
-    socket.on('catch_up', function(msg) {
+    socket.on('catch_up', (msg) => {
+        console.log('Catch up:');
+        console.log(msg);
         doc.catchUp(msg);
         editor.refresh();
     });
 
     // Peer cursor
-    socket.on('cursor_activity', function(msg) {
+    socket.on('cursor_activity', (msg) => {
         editor.showPeerCursorActivity(msg);
     });
 
-    // Emit event to join document
-    socket.emit('join_document', {docId: docId, state: doc.getStateString()});
+    // Emit event to join document, everytime connection is made
+    socket.on('connect', () => {
+        socket.emit('join_document', {docId: docId, state: doc.getStateString(), alias: alias});
+    });
+
 
 }
 
 init();
 
+
+// let params = JSON.stringify({docId: docId, alias: alias});
+// socket = io.connect('', {query: 'params=' + params});
 
 // http://collabedit.com/a2k79
 // todo: auth (browser cache)

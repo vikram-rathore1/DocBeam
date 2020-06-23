@@ -582,7 +582,6 @@ let introScripts = [
 ];
 
 function typeIntro(id, index) {
-    console.log('called for index ' + index);
 
     if (introScripts.length === id) return;
 

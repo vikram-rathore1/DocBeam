@@ -20,7 +20,7 @@ function BeamEditor(doc, socket, languageSelect, title, textArea) {
     editor.on("change", function (ins, changeObj) {
         if (doc.getText() === ins.getValue()) return;   // Change event triggered by replication or no changes (paste same text over)
         doc.setText(ins.getValue(), function(st, ch) {
-            socket.emit('crdt_changes', {docId: docId, changes: ch});
+            socket.emit('crdt_changes', {docId: docId, changes: ch, alias: alias});
         });
     });
 
@@ -34,14 +34,14 @@ function BeamEditor(doc, socket, languageSelect, title, textArea) {
 
     // title.addEventListener('change', function() {
     //     doc.setTitle(title.value, function(st, ch) {
-    //         socket.emit('crdt_changes', {docId: docId, changes: ch});
+    //         socket.emit('crdt_changes', {docId: docId, changes: ch, alias: alias});
     //     });
     // });
 
     languageSelect.addEventListener('change', function() {
         editor.setOption('mode', languageSelect.value);
         doc.setLanguage(languageSelect.value, function(st, ch) {
-            socket.emit('crdt_changes', {docId: docId, changes: ch});
+            socket.emit('crdt_changes', {docId: docId, changes: ch, alias: alias});
         });
     });
 

@@ -15,11 +15,17 @@
 
     <h1 id="introHeading"></h1>
     <p id="muchExpectedFeatureList">(Paste description here)</p>
-    <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-nodejs"><span class="glyphicon glyphicon-flash"></span> Create a new document</a>
-    <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/node-js-getting-started"><span class="glyphicon glyphicon-download"></span> Join a document</a>
+    <a type="button" class="btn btn-lg btn-default" href="./new"><span class="glyphicon glyphicon-flash"></span> Create a new document</a>
+    <a type="button" class="btn btn-lg btn-primary" onclick="joinDocument()"><span class="glyphicon glyphicon-download"></span> Join a document</a>
   </div>
 </div>
-
+<script>
+  function joinDocument() {
+    let link = prompt("Please paste the link/id of document:", "").split('/');
+    let docId = link[link.length - 1];
+    window.location.href = '/' + docId;
+  }
+</script>
 </body>
 <script src="/scripts/intro.js"></script>
 </html>

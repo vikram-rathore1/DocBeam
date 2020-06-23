@@ -1,10 +1,11 @@
 function BeamDoc(title='', text='', language='text') {
 
-    this.state = Automerge.from({
-        title: new Automerge.Text(title),
-        text: new Automerge.Text(text),
-        language: language
-    });
+    // this.state = Automerge.from({
+    //     title: new Automerge.Text(title),
+    //     text: new Automerge.Text(text),
+    //     language: language
+    // });
+    this.state = Automerge.init();
 
     this.setTitle = function(newTitle, callback) {
         const patches = getPatches(this.state.title.toString(), newTitle);
