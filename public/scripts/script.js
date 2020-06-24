@@ -4,6 +4,7 @@ const defaultLang = 'text';
 const languageSelectId = 'languageSelect';
 const titleId = 'beamDocTitle';
 const editorTextAreaId = 'beamDocEditor';
+const collabListId = 'peer-list';
 const docId = window.location.pathname.split('/').slice(-1)[0];   // last elem of split by '/'
 const alias = getUserAlias(docId);
 
@@ -14,7 +15,14 @@ let editor;
 function init() {
 
     doc = new BeamDoc(defaultTitle, defaultText, defaultLang);
-    editor = new BeamEditor(doc, socket, document.getElementById(languageSelectId), document.getElementById(titleId), document.getElementById(editorTextAreaId));
+    editor = new BeamEditor(
+        doc,
+        socket,
+        document.getElementById(languageSelectId),
+        document.getElementById(titleId),
+        document.getElementById(editorTextAreaId),
+        document.getElementById(collabListId)
+    );
 
     socket.on('crdt_changes', function(msg) {
         console.log('Crdt changes:');

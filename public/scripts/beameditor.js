@@ -1,4 +1,4 @@
-function BeamEditor(doc, socket, languageSelect, title, textArea) {
+function BeamEditor(doc, socket, languageSelect, title, textArea, collabList) {
 
     const blinkRate = 500;
 
@@ -57,11 +57,27 @@ function BeamEditor(doc, socket, languageSelect, title, textArea) {
             }
         }
 
+        // get scroll position, to preserve
+        let scrollInfo = editor.getScrollInfo();
+
         // sync text
         let cursorPos = getNewCursorPos(this.getCursorIndex(), editor.getValue(), doc.getText());
         editor.setValue(doc.getText());
         editor.setOption('mode', languageSelect.value);
         editor.setCursor(cursorPos);
+        editor.scrollTo(scrollInfo.left, scrollInfo.top);
+
+        // sync collab list
+        let collabListHtml = '';
+        let cList= doc.getCollaboratorList();
+        if (cList) {
+            for (c in cList) {
+                let color = cList[c].color;
+                let opacity = (cList[c].online) ? '1' : '0.5';
+                collabListHtml += '<span class="label peer-label" style="background: ' + color + '; opacity: ' + opacity + '">' + c + '</span> ';
+            }
+        }
+        collabList.innerHTML = collabListHtml;
     };
 
     // Find out index of position where cursor is, assuming text is 1-d string

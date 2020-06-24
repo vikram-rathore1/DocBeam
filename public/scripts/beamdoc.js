@@ -96,4 +96,10 @@ function BeamDoc(title='', text='', language='text') {
         return '#ccc';
     };
 
+    this.getCollaboratorList = function() {
+        if (this.state)
+            return this.state.collabs;
+        return undefined;
+    };
+
 }

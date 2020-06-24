@@ -70,13 +70,21 @@ function getUserAlias(docId) {
 }
 
 function copyLink() {
-    let ct = document.getElementById('link-copy-hidden');
-    ct.select();
-    ct.setSelectionRange(0, 99999);
-    document.execCommand("copy");
+    let textArea = document.createElement("textarea");
+    textArea.value = window.location.href;
+
+    // Avoid scrolling to bottom
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
 }
 
 function setLink() {
     document.getElementById('link-copy').innerHTML = window.location.href + ' <span class="glyphicon glyphicon-duplicate">';
-    document.getElementById('link-copy-hidden').value = window.location.href;
 }

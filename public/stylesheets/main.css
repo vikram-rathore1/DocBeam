@@ -173,5 +173,6 @@
   }
   #link-copy-hidden {
     /*display: none;*/
+    /*visibility: hidden;*/
   }
 
