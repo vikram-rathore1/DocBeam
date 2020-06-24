@@ -57,6 +57,8 @@ function init() {
 
     setLink();
 
+    removeLoader();
+
 }
 
 init();

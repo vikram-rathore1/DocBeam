@@ -88,3 +88,9 @@ function copyLink() {
 function setLink() {
     document.getElementById('link-copy').innerHTML = window.location.href + ' <span class="glyphicon glyphicon-duplicate">';
 }
+
+function removeLoader() {
+    setTimeout(function(){
+        document.getElementById('loader-wrapper').style.display = 'none';
+    }, 300);
+}
