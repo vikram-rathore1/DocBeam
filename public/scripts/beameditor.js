@@ -1,6 +1,8 @@
-function BeamEditor(doc, socket, languageSelect, title, textArea, collabList) {
+function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, chatList) {
 
     const blinkRate = 500;
+
+    let _this = this;       // todo: remove this hack, this is done to access "this" inside languageSelect.addEventListener
 
     let editor = CodeMirror.fromTextArea(textArea, {
         lineNumbers: true,
@@ -39,9 +41,10 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList) {
 
     languageSelect.addEventListener('change', function() {
         editor.setOption('mode', languageSelect.value);
-        doc.setLanguage(languageSelect.value, function(st, ch) {
+        doc.setLanguage(languageSelect.value, languageSelect.options[languageSelect.selectedIndex].innerHTML, function(st, ch) {
             socket.emit('crdt_changes', {docId: docId, changes: ch, alias: alias});
         });
+        _this.refresh();
     });
 
     this.refresh = function() {
@@ -78,6 +81,24 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList) {
             }
         }
         collabList.innerHTML = collabListHtml;
+
+        // sync chats
+        let chats = doc.getChatList();
+        let chatHtml = '';
+        for (i in chats) {
+            let c = chats[i];
+            let color = doc.getCollaboratorColor(c.sender);
+            let cls = (c.type === 'system') ? 'ui-text' : 'chat-message';
+
+            chatHtml += '<div class="chat-message-wrapper">\n' +
+                '                    <span class="' + cls + '">\n' +
+                '                        <b style="color: ' + color + ';">' + c.sender + '</b> ' + c.message +
+                '                    </span>\n' +
+                '                </div>';
+        }
+        chatList.innerHTML = chatHtml;
+        chatList.scrollTo(0,chatList.scrollHeight);
+
     };
 
     // Find out index of position where cursor is, assuming text is 1-d string

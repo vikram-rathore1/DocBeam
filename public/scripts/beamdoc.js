@@ -55,9 +55,15 @@ function BeamDoc(title='', text='', language='text') {
         callback(nextState, changes);
     };
 
-    this.setLanguage = function(newLanguage, callback) {
+    // todo: these operations should be emitted as separate events (if possible. think about offline mode)
+    this.setLanguage = function(newLanguage, newLanguageName, callback) {
         let nextState = Automerge.change(this.state, doc => {
             doc.language = newLanguage;
+            doc.chats.push({
+                sender: alias,
+                message: 'changed language to ' + newLanguageName,
+                type: 'system'
+            });
         });
         let changes = Automerge.getChanges(this.state, nextState);
         this.state = nextState;
@@ -99,6 +105,12 @@ function BeamDoc(title='', text='', language='text') {
     this.getCollaboratorList = function() {
         if (this.state)
             return this.state.collabs;
+        return undefined;
+    };
+
+    this.getChatList = function() {
+        if (this.state)
+            return this.state.chats;
         return undefined;
     };
 

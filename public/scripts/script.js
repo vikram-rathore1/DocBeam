@@ -5,6 +5,7 @@ const languageSelectId = 'languageSelect';
 const titleId = 'beamDocTitle';
 const editorTextAreaId = 'beamDocEditor';
 const collabListId = 'peer-list';
+const chatListId = 'chat-container';
 const docId = window.location.pathname.split('/').slice(-1)[0];   // last elem of split by '/'
 const alias = getUserAlias(docId);
 
@@ -21,7 +22,8 @@ function init() {
         document.getElementById(languageSelectId),
         document.getElementById(titleId),
         document.getElementById(editorTextAreaId),
-        document.getElementById(collabListId)
+        document.getElementById(collabListId),
+        document.getElementById(chatListId),
     );
 
     socket.on('crdt_changes', function(msg) {
