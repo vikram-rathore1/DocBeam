@@ -34,32 +34,34 @@ app
 io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
-        if (socketMap[socket.id] === undefined) return;
         let docId = socketMap[socket.id];
-
-        let changes = docStore.leaveDoc(docId, socket.id);
+        if (docId === undefined) return;
 
         console.log(socket.id + ' disconnected from doc ' + docId);
         docStore.logDocument(docId);
 
-        if (changes !== null && changes !== undefined)
-            socket.broadcast.emit('crdt_changes', {docId: docId, changes: changes});
+        let changes = docStore.leaveDoc(docId, socket.id);
+        socket.broadcast.to(docId).emit('crdt_changes', {docId: docId, changes: changes});
     });
 
     socket.on('crdt_changes', (msg) => {
+        let docId = socketMap[socket.id];
+        if (docId === undefined) return;
+
         console.log('IN: crdt_changes: ' + JSON.stringify(msg, null, 4));
 
         docStore.applyChanges(msg.docId, msg.changes);
         console.log('Server State: ');
         docStore.logDocument(msg.docId);
-        socket.broadcast.emit('crdt_changes', msg);
+        socket.broadcast.to(docId).emit('crdt_changes', msg);
         console.log('OUT: crdt_changes: ' + JSON.stringify(msg, null, 4));
     });
 
     socket.on('cursor_activity', (msg) => {
         console.log('IN: cursor_activity: ' + JSON.stringify(msg));
-
-        socket.broadcast.emit('cursor_activity', msg);
+        let docId = socketMap[socket.id];
+        if (docId === undefined) return;
+        socket.broadcast.to(docId).emit('cursor_activity', msg);
         console.log('OUT: cursor_activity: ' + JSON.stringify(msg));
     });
 
@@ -71,7 +73,7 @@ io.on('connection', (socket) => {
             socketMap[socket.id] = msg.docId;
             socket.emit('catch_up', docStore.getDocState(msg.docId));
             socket.join(msg.docId);
-            socket.broadcast.emit('crdt_changes', {docId: msg.docId, changes: changes});
+            socket.broadcast.to(msg.docId).emit('crdt_changes', {docId: msg.docId, changes: changes});
             console.log('OUT: catch_up: ');
             docStore.logDocument(msg.docId);
         } else {

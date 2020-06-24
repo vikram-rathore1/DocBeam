@@ -17,11 +17,11 @@ function init() {
     editor = new BeamEditor(doc, socket, document.getElementById(languageSelectId), document.getElementById(titleId), document.getElementById(editorTextAreaId));
 
     socket.on('crdt_changes', function(msg) {
+        console.log('Crdt changes:');
+        console.log(msg);
         if (msg.docId !== docId) return;
         doc.applyChanges(msg.changes);
         editor.refresh();
-        console.log('Crdt changes:');
-        console.log(msg);
     });
 
     // React to catch_up event
@@ -34,6 +34,7 @@ function init() {
 
     // Peer cursor
     socket.on('cursor_activity', (msg) => {
+        console.log('cursor_activity');
         editor.showPeerCursorActivity(msg);
     });
 
@@ -42,6 +43,7 @@ function init() {
         socket.emit('join_document', {docId: docId, state: doc.getStateString(), alias: alias});
     });
 
+    setLink();
 
 }
 

@@ -28,7 +28,8 @@ function BeamEditor(doc, socket, languageSelect, title, textArea) {
         socket.emit('cursor_activity', {
             cursorRow: ins.getCursor().line,
             cursorCol: ins.getCursor().ch,
-            selection: [ins.getCursor(true), ins.getCursor(false)]
+            selection: [ins.getCursor(true), ins.getCursor(false)],
+            alias: alias
         });
     });
 

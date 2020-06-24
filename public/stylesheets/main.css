@@ -160,4 +160,10 @@
     display: block;
     width: 100%;
   }
+  #link-copy {
+    cursor: pointer;
+  }
+  #link-copy-hidden {
+    /*display: none;*/
+  }
 

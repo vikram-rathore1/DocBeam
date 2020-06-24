@@ -68,3 +68,15 @@ function getUserAlias(docId) {
     setCookie(docId, alias, 6);
     return alias;
 }
+
+function copyLink() {
+    let ct = document.getElementById('link-copy-hidden');
+    ct.select();
+    ct.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+}
+
+function setLink() {
+    document.getElementById('link-copy').innerHTML = window.location.href + ' <span class="glyphicon glyphicon-duplicate">';
+    document.getElementById('link-copy-hidden').value = window.location.href;
+}
