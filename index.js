@@ -9,7 +9,7 @@ const utils = require('./lib/utils');
 
 server.listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
-let socketMap = {};
+let socketMap = {};     // socket id -> document id
 
 app
   .use(express.static(path.join(__dirname, 'public')))
@@ -35,37 +35,45 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         if (socketMap[socket.id] === undefined) return;
-        let docId = socketMap[socket.id].docId;
-        let alias = socketMap[socket.id].alias;
-        let changes = docStore.leaveDoc(docId, alias);
+        let docId = socketMap[socket.id];
+
+        let changes = docStore.leaveDoc(docId, socket.id);
+
+        console.log(socket.id + ' disconnected from doc ' + docId);
+        docStore.logDocument(docId);
+
         if (changes !== null && changes !== undefined)
-            socket.broadcast.emit('crdt_changes', {docId: docId, changes: changes, alias: alias});
+            socket.broadcast.emit('crdt_changes', {docId: docId, changes: changes});
     });
 
     socket.on('crdt_changes', (msg) => {
-        // console.log('IN: crdt_changes: ' + JSON.stringify(msg));
+        console.log('IN: crdt_changes: ' + JSON.stringify(msg, null, 4));
 
         docStore.applyChanges(msg.docId, msg.changes);
+        console.log('Server State: ');
+        docStore.logDocument(msg.docId);
         socket.broadcast.emit('crdt_changes', msg);
-        // console.log('OUT: crdt_changes: ' + JSON.stringify(msg));
+        console.log('OUT: crdt_changes: ' + JSON.stringify(msg, null, 4));
     });
 
     socket.on('cursor_activity', (msg) => {
-        // console.log('IN: cursor_activity: ' + JSON.stringify(msg));
+        console.log('IN: cursor_activity: ' + JSON.stringify(msg));
 
         socket.broadcast.emit('cursor_activity', msg);
-        // console.log('OUT: cursor_activity: ' + JSON.stringify(msg));
+        console.log('OUT: cursor_activity: ' + JSON.stringify(msg));
     });
 
     socket.on('join_document', (msg) => {
-        // console.log('IN: join_document: ' + JSON.stringify(msg));
+        console.log('IN: join_document: ' + JSON.stringify({docId: msg.docId, alias: msg.alias, socketId: socket.id}));
 
         if (docStore.docExists(msg.docId)) {
-            docStore.joinDoc(msg.docId, msg.alias, msg.state);
-            socketMap[socket.id] = {docId: msg.docId, alias: msg.alias};
+            let changes = docStore.joinDoc(msg.docId, socket.id, msg.alias, msg.state);
+            socketMap[socket.id] = msg.docId;
             socket.emit('catch_up', docStore.getDocState(msg.docId));
             socket.join(msg.docId);
-            // console.log('OUT: catch_up: ' + JSON.stringify(docStore.getDocState(msg.docId)));
+            socket.broadcast.emit('crdt_changes', {docId: msg.docId, changes: changes});
+            console.log('OUT: catch_up: ');
+            docStore.logDocument(msg.docId);
         } else {
             socket.emit('not_found', 'Document does not exist');
         }

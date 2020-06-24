@@ -65,6 +65,8 @@ function BeamDoc(title='', text='', language='text') {
     };
 
     this.applyChanges = function(changes) {
+        console.log('Apply changes: ' + typeof changes);
+        console.log(changes);
         this.state = Automerge.applyChanges(this.state, changes);
     };
 
