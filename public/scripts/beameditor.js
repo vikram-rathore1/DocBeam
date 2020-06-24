@@ -13,9 +13,7 @@ function BeamEditor(doc, socket, languageSelect, title, textArea) {
         viewportMargin: Infinity
     });
 
-    let marker = undefined;
-    let markerInterval = undefined;
-    let selectionMarker = undefined;
+    let peerCursors = {};       // alias -> { marker: <> , interval: <>, selection: <>}
 
     editor.on("change", function (ins, changeObj) {
         if (doc.getText() === ins.getValue()) return;   // Change event triggered by replication or no changes (paste same text over)
@@ -79,24 +77,29 @@ function BeamEditor(doc, socket, languageSelect, title, textArea) {
     };
 
     this.showPeerCursorActivity = function(cursorInfo) {
+        if (cursorInfo.alias === alias) return;     // Do nothing if this is my own cursor from another tab
 
         // Clear old cursor & selection
-        if (marker !== undefined) marker.clear();
-        if (selectionMarker !== undefined) selectionMarker.clear();
+        if (cursorInfo.alias in peerCursors) {
+            peerCursors[cursorInfo.alias].marker.clear();
+            peerCursors[cursorInfo.alias].selectionMarker.clear();
+            clearInterval(peerCursors[cursorInfo.alias].interval);
+        } else peerCursors[cursorInfo.alias] = {marker: undefined, selectionMarker: undefined, interval: undefined};
 
         // Create cursor element
         const peerCursorPos = {line: cursorInfo.cursorRow, ch: cursorInfo.cursorCol};
         const peerCursorCoords = editor.cursorCoords(peerCursorPos);
         const cursorElement = document.createElement('span');
         cursorElement.className = 'peer-cursor';
-        cursorElement.attributes.peer = 'Vikram Singh';     // todo: name of peer
-        cursorElement.style.borderLeftColor = '#ff0000';    // todo: different colors based on person
+        cursorElement.setAttribute('peer', cursorInfo.alias);
+        cursorElement.style.borderLeftColor = doc.getCollaboratorColor(cursorInfo.alias);
+        cursorElement.style.borderBottomColor = doc.getCollaboratorColor(cursorInfo.alias);
         cursorElement.style.height = `${(peerCursorCoords.bottom - peerCursorCoords.top)}px`;
-        marker = editor.setBookmark(peerCursorPos, { widget: cursorElement });
+        peerCursors[cursorInfo.alias].marker = editor.setBookmark(peerCursorPos, { widget: cursorElement });
 
         // Register cursor blinking behavior
         let show = true;
-        markerInterval = setInterval(() => {
+        peerCursors[cursorInfo.alias].markerInterval = setInterval(() => {
             if(show) {
                 cursorElement.style.visibility = 'hidden';
                 show = false;
@@ -113,7 +116,7 @@ function BeamEditor(doc, socket, languageSelect, title, textArea) {
         });
 
         // Show peer's text selection
-        selectionMarker = editor.markText(cursorInfo.selection[0], cursorInfo.selection[1], {className: "styled-background"});
+        peerCursors[cursorInfo.alias].selectionMarker = editor.markText(cursorInfo.selection[0], cursorInfo.selection[1], {className: "styled-background"});
     };
 
     this.getEditorInstance = function() {

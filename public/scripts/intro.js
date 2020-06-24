@@ -6,8 +6,8 @@ OR
 hardcode delay after every line
  */
 
-let cursor1 = '<span class="peer-cursor" style="border-left:4px solid #2ECC71; height:1em;"></span>';
-let cursor2 = '<span class="peer-cursor" style="border-left:4px solid #C70039; height:1em;"></span>';
+let cursor1 = '<span class="peer-cursor-intro" style="border-left:4px solid #2ECC71; height:1em;"></span>';
+let cursor2 = '<span class="peer-cursor-intro" style="border-left:4px solid #C70039; height:1em;"></span>';
 
 let introHeadingScript = [
     ["(Paste Heading here)[peer1]", 800],
@@ -576,9 +576,9 @@ let buttonExplanationScript = [
 ];
 
 let introScripts = [
-    ['introHeading', introHeadingScript, '<span class="peer-cursor" style="border-left:4px solid #2ECC71; height:1em;"></span>', '<span class="peer-cursor" style="border-left:4px solid #C70039; height:1em;"></span>'],
-    ['muchExpectedFeatureList', muchExpectedFeatureListScript, '<span class="peer-cursor" style="border-left:2px solid #2ECC71; height:1.4em;"></span>', '<span class="peer-cursor" style="border-left:2px solid #C70039; height:1.4em;"></span>'],
-    // ['buttonExplanation', buttonExplanationScript, '<span class="peer-cursor" style="border-left:2px solid #2ECC71; height:1.4em;"></span>', '<span class="peer-cursor" style="border-left:2px solid #C70039; height:1.4em;"></span>'],
+    ['introHeading', introHeadingScript, '<span class="peer-cursor-intro" style="border-left:4px solid #2ECC71; height:1em;"></span>', '<span class="peer-cursor-intro" style="border-left:4px solid #C70039; height:1em;"></span>'],
+    ['muchExpectedFeatureList', muchExpectedFeatureListScript, '<span class="peer-cursor-intro" style="border-left:2px solid #2ECC71; height:1.4em;"></span>', '<span class="peer-cursor-intro" style="border-left:2px solid #C70039; height:1.4em;"></span>'],
+    // ['buttonExplanation', buttonExplanationScript, '<span class="peer-cursor-intro" style="border-left:2px solid #2ECC71; height:1.4em;"></span>', '<span class="peer-cursor-intro" style="border-left:2px solid #C70039; height:1.4em;"></span>'],
 ];
 
 function typeIntro(id, index) {
@@ -602,7 +602,7 @@ typeIntro(0, 0);
 
 let show = true;
 setInterval(() => {
-    let cursors = document.getElementsByClassName('peer-cursor');
+    let cursors = document.getElementsByClassName('peer-cursor-intro');
     if(show) {
         for (let i = 0; i < cursors.length; i++) {
             cursors[i].style.visibility = 'hidden';

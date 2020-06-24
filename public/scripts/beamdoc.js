@@ -88,6 +88,12 @@ function BeamDoc(title='', text='', language='text') {
 
     this.catchUp = function(stateString) {
         this.state = Automerge.load(stateString);
-    }
+    };
+
+    this.getCollaboratorColor = function(alias) {
+        if (this.state && this.state.collabs && alias in this.state.collabs)
+            return this.state.collabs[alias].color;
+        return '#ccc';
+    };
 
 }
