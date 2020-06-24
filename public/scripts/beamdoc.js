@@ -55,7 +55,7 @@ function BeamDoc(title='', text='', language='text') {
         callback(nextState, changes);
     };
 
-    // todo: these operations should be emitted as separate events (if possible. think about offline mode)
+    // todo: these operations e.g. adding chat should be emitted as separate events (if possible. think about offline mode)
     this.setLanguage = function(newLanguage, newLanguageName, callback) {
         let nextState = Automerge.change(this.state, doc => {
             doc.language = newLanguage;
@@ -63,6 +63,19 @@ function BeamDoc(title='', text='', language='text') {
                 sender: alias,
                 message: 'changed language to ' + newLanguageName,
                 type: 'system'
+            });
+        });
+        let changes = Automerge.getChanges(this.state, nextState);
+        this.state = nextState;
+        callback(nextState, changes);
+    };
+
+    this.pushChat = function(chatMsg, callback) {
+        let nextState = Automerge.change(this.state, doc => {
+            doc.chats.push({
+                sender: alias,
+                message: chatMsg,
+                type: 'user'
             });
         });
         let changes = Automerge.getChanges(this.state, nextState);

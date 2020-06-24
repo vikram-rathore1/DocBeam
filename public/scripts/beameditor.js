@@ -1,4 +1,4 @@
-function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, chatList) {
+function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, chatList, chatMessageInput) {
 
     const blinkRate = 500;
 
@@ -45,6 +45,19 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
             socket.emit('crdt_changes', {docId: docId, changes: ch, alias: alias});
         });
         _this.refresh();
+    });
+
+    chatMessageInput.addEventListener('keypress', function(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            // todo: validation length etc
+            let msg = chatMessageInput.value;
+            doc.pushChat(msg, function(st, ch) {
+                socket.emit('crdt_changes', {docId: docId, changes: ch, alias: alias});
+            });
+            chatMessageInput.value = '';
+            _this.refresh();
+        }
     });
 
     this.refresh = function() {

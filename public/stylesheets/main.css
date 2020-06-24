@@ -159,6 +159,7 @@
     border-radius: 15px;
     -webkit-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    display: block;
   }
   #chat-message-input {
     margin: 20px 0;
