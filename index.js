@@ -37,11 +37,10 @@ io.on('connection', (socket) => {
         let docId = socketMap[socket.id];
         if (docId === undefined) return;
 
-        console.log(socket.id + ' disconnected from doc ' + docId);
-        docStore.logDocument(docId);
-
         let changes = docStore.leaveDoc(docId, socket.id);
         socket.broadcast.to(docId).emit('crdt_changes', {docId: docId, changes: changes});
+        console.log(socket.id + ' disconnected from doc ' + docId);
+        docStore.logDocument(docId);
     });
 
     socket.on('crdt_changes', (msg) => {
