@@ -76,11 +76,20 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
         // get scroll position, to preserve
         let scrollInfo = editor.getScrollInfo();
 
-        // sync text
-        let cursorPos = getNewCursorPos(this.getCursorIndex(), editor.getValue(), doc.getText());
+        // sync text, cursor, selection, language
+        let cursorPos = editor.getCursor();
+        let selectionStart = editor.getCursor(true);
+        let selectionEnd = editor.getCursor(false);
+
+        cursorPos = getNewCursorPos(this.getCursorIndex(cursorPos), editor.getValue(), doc.getText());
+        if (selectionStart.line !== selectionEnd.line || selectionStart.ch !== selectionEnd.ch) {
+            selectionStart = getNewCursorPos(this.getCursorIndex(selectionStart), editor.getValue(), doc.getText());
+            selectionEnd = getNewCursorPos(this.getCursorIndex(selectionEnd), editor.getValue(), doc.getText());
+        }
         editor.setValue(doc.getText());
         editor.setOption('mode', languageSelect.value);
         editor.setCursor(cursorPos);
+        editor.setSelection(selectionStart, selectionEnd);
         editor.scrollTo(scrollInfo.left, scrollInfo.top);
 
         // sync collab list
@@ -115,11 +124,10 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
     };
 
     // Find out index of position where cursor is, assuming text is 1-d string
-    this.getCursorIndex = function() {
-        let cursorPos = editor.getCursor();
-        let cursorIndex = cursorPos.ch;
+    this.getCursorIndex = function(pos) {
+        let cursorIndex = pos.ch;
         let line = 0;
-        while (line < cursorPos.line) {
+        while (line < pos.line) {
             cursorIndex += editor.lineInfo(line).text.length + 1;
             line += 1;
         }
