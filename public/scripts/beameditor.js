@@ -15,6 +15,8 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
         viewportMargin: Infinity
     });
 
+    let ignoreCursorActivity = false;
+
     let peerCursors = {};       // alias -> { marker: <> , interval: <>, selection: <>}
 
     editor.on("change", function (ins, changeObj) {
@@ -25,6 +27,16 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
     });
 
     editor.on("cursorActivity", function (ins) {
+        if (ignoreCursorActivity) {
+            ignoreCursorActivity = false;
+            return;
+        }
+        // console.log({
+        //     cursorRow: ins.getCursor().line,
+        //     cursorCol: ins.getCursor().ch,
+        //     selection: [ins.getCursor(true), ins.getCursor(false)],
+        //     alias: alias
+        // });
         socket.emit('cursor_activity', {
             cursorRow: ins.getCursor().line,
             cursorCol: ins.getCursor().ch,
@@ -61,6 +73,7 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
     });
 
     this.refresh = function() {
+        ignoreCursorActivity = true;        // Don't emit next cursor activity to network
         // sync title
         // title.value = doc.getTitle();
 
@@ -81,14 +94,21 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
         let selectionStart = editor.getCursor(true);
         let selectionEnd = editor.getCursor(false);
 
-        cursorPos = getNewCursorPos(this.getCursorIndex(cursorPos), editor.getValue(), doc.getText());
         if (selectionStart.line !== selectionEnd.line || selectionStart.ch !== selectionEnd.ch) {
-            selectionStart = getNewCursorPos(this.getCursorIndex(selectionStart), editor.getValue(), doc.getText());
-            selectionEnd = getNewCursorPos(this.getCursorIndex(selectionEnd), editor.getValue(), doc.getText());
+            if (cursorPos.line === selectionStart.line && cursorPos.ch === selectionStart.ch) {
+                let tmp = selectionEnd;
+                selectionEnd = selectionStart;
+                selectionStart = tmp;
+            }
+            selectionStart = this.getCursorIndex(selectionStart);
+            selectionEnd = this.getCursorIndex(selectionEnd);
+        } else {
+            selectionStart = this.getCursorIndex(selectionStart);
+            selectionEnd = selectionStart;
         }
+
         editor.setValue(doc.getText());
         editor.setOption('mode', languageSelect.value);
-        editor.setCursor(cursorPos);
         editor.setSelection(selectionStart, selectionEnd);
         editor.scrollTo(scrollInfo.left, scrollInfo.top);
 
@@ -125,13 +145,17 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
 
     // Find out index of position where cursor is, assuming text is 1-d string
     this.getCursorIndex = function(pos) {
+        let past = editor.getValue();
+        let present = doc.getText();
         let cursorIndex = pos.ch;
         let line = 0;
         while (line < pos.line) {
             cursorIndex += editor.lineInfo(line).text.length + 1;
             line += 1;
         }
-        return cursorIndex;
+        let cpos = getNewCursorPos(cursorIndex, past, present);
+        cpos.sticky = pos.sticky;
+        return cpos;
     };
 
     this.showPeerCursorActivity = function(cursorInfo) {
