@@ -14,7 +14,7 @@ const alias = getUserAlias(docId);
 let socket = io();
 let doc;
 let editor;
-let firstConnection = true;
+let firstConnectionFromTab = true;
 
 function init() {
 
@@ -55,9 +55,9 @@ function init() {
     // Emit event to join document, everytime connection is made
     socket.on('connect', () => {
         socket.emit('join_document', {docId: docId, state: doc.getStateString(), alias: alias});
-        if (!firstConnection)
+        if (!firstConnectionFromTab)
             document.getElementById(alertSectionId).innerHTML = getConnectedAlert();
-        else firstConnection = false;
+        else firstConnectionFromTab = false;
     });
 
     socket.on('disconnect', () => {
