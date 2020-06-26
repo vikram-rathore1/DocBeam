@@ -1,53 +1,39 @@
 function BeamDoc(title='', text='', language='text') {
 
-    // this.state = Automerge.from({
-    //     title: new Automerge.Text(title),
-    //     text: new Automerge.Text(text),
-    //     language: language
-    // });
     this.state = Automerge.init();
 
-    this.setTitle = function(newTitle, callback) {
-        const patches = getPatches(this.state.title.toString(), newTitle);
-        let nextState = Automerge.change(this.state, doc => {
-            patches.forEach(patch => {
-                let index = patch.start1;
-                patch.diffs.forEach(diff => {
-                    switch (diff[0]) {
-                        case 1:
-                            doc.title.insertAt(index, ...diff[1].split(''));
-                        case 0:
-                            index += diff[1].length;
-                            break;
-                        case -1:
-                            doc.title.deleteAt(index, diff[1].length);
-                            break;
-                    }
-                });
-            });
-        });
-        let changes = Automerge.getChanges(this.state, nextState);
-        this.state = nextState;
-        callback(nextState, changes);
-    };
+    // update the function like setText, whenever this feature is enabled
+    // this.setTitle = function(newTitle, callback) {
+    //     const patches = getPatches(this.state.title.toString(), newTitle);
+    //     let nextState = Automerge.change(this.state, doc => {
+    //         patches.forEach(patch => {
+    //             let index = patch.start1;
+    //             patch.diffs.forEach(diff => {
+    //                 switch (diff[0]) {
+    //                     case 1:
+    //                         doc.title.insertAt(index, ...diff[1].split(''));
+    //                     case 0:
+    //                         index += diff[1].length;
+    //                         break;
+    //                     case -1:
+    //                         doc.title.deleteAt(index, diff[1].length);
+    //                         break;
+    //                 }
+    //             });
+    //         });
+    //     });
+    //     let changes = Automerge.getChanges(this.state, nextState);
+    //     this.state = nextState;
+    //     callback(nextState, changes);
+    // };
 
     this.setText = function(newText, callback) {
         const patches = getPatches(this.state.text.toString(), newText);
         let nextState = Automerge.change(this.state, doc => {
-            patches.forEach(patch => {
-                let index = patch.start1;
-                patch.diffs.forEach(diff => {
-                    switch (diff[0]) {
-                        case 1:
-                            doc.text.insertAt(index, ...diff[1].split(''));
-                        case 0:
-                            index += diff[1].length;
-                            break;
-                        case -1:
-                            doc.text.deleteAt(index, diff[1].length);
-                            break;
-                    }
-                });
+            applyPatches(patches, (pos, val) => {
+                doc.text.insertAt(pos, ...val.split(''));
+            }, (pos, val) => {
+                doc.text.deleteAt(pos, val.length);
             });
         });
         let changes = Automerge.getChanges(this.state, nextState);
