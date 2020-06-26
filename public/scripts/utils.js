@@ -104,11 +104,40 @@ function copyLink() {
 }
 
 function setLink() {
-    document.getElementById('link-copy').innerHTML = window.location.href + ' <span class="glyphicon glyphicon-duplicate">';
+    document.getElementById('link-copy').innerHTML = window.location.href + ' <i class="fa fa-copy"></i>';
 }
 
 function removeLoader() {
     setTimeout(function(){
         document.getElementById('loader-wrapper').style.display = 'none';
     }, 300);
+}
+
+function getDisconnectedAlert() {
+    return '<div class="alert alert-warning alert-dismissible" role="alert">\n' +
+        '\n' +
+        '                    <span class="fa-stack">\n' +
+        '                      <i class="fas fa-wifi fa-stack-2x"></i>\n' +
+        '                      <i class="fas fa-slash fa-stack-2x"></i>\n' +
+        '                    </span>\n' +
+        '\n' +
+        '                    <strong>Disconnected from server, editing document in Offline mode</strong>\n' +
+        '                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">\n' +
+        '                        <span aria-hidden="true">&times;</span>\n' +
+        '                    </button>\n' +
+        '                </div>';
+}
+
+function getConnectedAlert() {
+    return '<div class="alert alert-success alert-dismissible" role="alert">\n' +
+    '\n' +
+    '                    <span class="fa-stack">\n' +
+    '                      <i class="fas fa-wifi fa-stack-2x"></i>\n' +
+    '                    </span>\n' +
+    '\n' +
+    '                    <strong>Connected now!</strong>\n' +
+    '                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">\n' +
+    '                        <span aria-hidden="true">&times;</span>\n' +
+    '                    </button>\n' +
+    '                </div>';
 }

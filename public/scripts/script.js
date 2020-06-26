@@ -6,6 +6,7 @@ const titleId = 'beamDocTitle';
 const editorTextAreaId = 'beamDocEditor';
 const collabListId = 'peer-list';
 const chatListId = 'chat-container';
+const alertSectionId = 'alert-section';
 const chatMessage = 'chat-message';
 const docId = window.location.pathname.split('/').slice(-1)[0];   // last elem of split by '/'
 const alias = getUserAlias(docId);
@@ -13,6 +14,7 @@ const alias = getUserAlias(docId);
 let socket = io();
 let doc;
 let editor;
+let firstConnection = true;
 
 function init() {
 
@@ -53,6 +55,13 @@ function init() {
     // Emit event to join document, everytime connection is made
     socket.on('connect', () => {
         socket.emit('join_document', {docId: docId, state: doc.getStateString(), alias: alias});
+        if (!firstConnection)
+            document.getElementById(alertSectionId).innerHTML = getConnectedAlert();
+        else firstConnection = false;
+    });
+
+    socket.on('disconnect', () => {
+        document.getElementById(alertSectionId).innerHTML = getDisconnectedAlert();
     });
 
     setLink();

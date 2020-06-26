@@ -113,8 +113,15 @@
   /*  height: 1em;*/
   /*}*/
   .right-section {
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     margin-bottom: 35px;
+  }
+  .right-section, #alert-section {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+  #alert-section .alert {
+    padding: 8px;
+    padding-left: 15px;
+    padding-right: 35px;
   }
   .right-section .ui-text {
     color: #999;
