@@ -21,36 +21,40 @@
             <div id="alert-section" class="col-md-12"></div>
 
             <div class="col-md-6">
-                <button class="btn btn-default" data-toggle="tooltip" title="Copy link" data-placement="right" id="link-copy" onclick="copyLink()">
-                </button>
+                <span id="languageSelectWrapper" data-toggle="tooltip" title="Language" data-placement="top">
+                    <i class="fa fa-code"></i>
+                    <select name="" id="languageSelect">
+                        <option value="text">Plain Text</option>
+                        <option value="text/x-csrc">C</option>
+                        <option value="text/x-c++src">C++</option>
+                        <option value="text/x-java">Java</option>
+                        <option value="text/x-go">Go</option>
+                        <option value="text/x-python">Python</option>
+                        <option value="text/javascript">Javascript</option>
+                        <option value="text/x-scala">Scala</option>
+                        <option value="text/x-csharp">C#</option>
+                        <option value="text/x-objectivec">Objective-C</option>
+                        <option value="text/x-rsrc">R</option>
+                        <option value="text/html">HTML</option>
+                        <option value="text/css">CSS</option>
+                        <option value="application/json">JSON</option>
+                    </select>
+                </span>
+
+                <span id="fontSizeSelectWrapper" data-toggle="tooltip" title="Font Size" data-placement="right">
+                    <i class="fa fa-text-height"></i>
+                    <select name="" id="fontSizeSelect" class="selectpicker">
+                        <option value="12px" selected>12 px</option>
+                        <option value="14px">14 px</option>
+                        <option value="16px">16 px</option>
+                        <option value="18px">18 px</option>
+                        <option value="20px">20 px</option>
+                    </select>
+                </span>
             </div>
             <div class="col-md-6 align-right">
-<!--                <b>Language: </b>-->
-                <i class="fa fa-code"></i>
-                <select name="" id="languageSelect">
-                    <option value="text">Plain Text</option>
-                    <option value="text/x-csrc">C</option>
-                    <option value="text/x-c++src">C++</option>
-                    <option value="text/x-java">Java</option>
-                    <option value="text/x-go">Go</option>
-                    <option value="text/x-python">Python</option>
-                    <option value="text/javascript">Javascript</option>
-                    <option value="text/x-scala">Scala</option>
-                    <option value="text/x-csharp">C#</option>
-                    <option value="text/x-objectivec">Objective-C</option>
-                    <option value="text/x-rsrc">R</option>
-                    <option value="text/html">HTML</option>
-                    <option value="text/css">CSS</option>
-                    <option value="application/json">JSON</option>
-                </select>
-                <i class="fa fa-text-height"></i>
-                <select name="" id="fontSizeSelect" class="selectpicker">
-                    <option value="12px" selected>12 px</option>
-                    <option value="14px">14 px</option>
-                    <option value="16px">16 px</option>
-                    <option value="18px">18 px</option>
-                    <option value="20px">20 px</option>
-                </select>
+                <button class="btn btn-default" data-toggle="tooltip" title="Copy link" data-placement="bottom" id="link-copy" onclick="copyLink()">
+                </button>
             </div>
         </div>
 

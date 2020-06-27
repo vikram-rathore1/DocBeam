@@ -195,6 +195,13 @@
     -moz-border-radius: 2px;
     border-radius: 2px;
   }
+  #languageSelectWrapper, #fontSizeSelectWrapper {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  #fontSizeSelectWrapper .dropdown {
+    width: 70px;
+  }
   #loader-wrapper {
     position: fixed;
     z-index: 1000;
