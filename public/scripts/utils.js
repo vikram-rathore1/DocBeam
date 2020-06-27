@@ -104,7 +104,16 @@ function copyLink() {
 }
 
 function setLink() {
-    document.getElementById('link-copy').innerHTML = window.location.href + ' <i class="fa fa-copy"></i>';
+    document.getElementById('link-copy').innerHTML = '<i class="fa fa-copy"></i> ' + window.location.href;
+    $('[data-toggle="tooltip"]').tooltip();
+}
+
+function setFontSizeSelection() {
+    let sel = document.getElementById('fontSizeSelect');
+    sel.addEventListener('change', () => {
+        document.getElementById('editorContainer').style.fontSize = sel.value;
+        editor.refresh();
+    });
 }
 
 function removeLoader() {

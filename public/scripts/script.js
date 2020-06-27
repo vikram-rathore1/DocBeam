@@ -66,6 +66,8 @@ function init() {
 
     setLink();
 
+    setFontSizeSelection();
+
     removeLoader();
 
 }

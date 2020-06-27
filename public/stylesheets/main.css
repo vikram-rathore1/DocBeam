@@ -53,7 +53,7 @@
     .jumbotron .lang-logo img {
       max-width: 100%; }
 
-    .CodeMirror { border: 1px solid #ddd; font-size: 12px; min-height: 600px; }
+    .CodeMirror { border: 1px solid #ddd; min-height: 600px; }
     .CodeMirror pre { padding-left: 7px; line-height: 1.25; }
     .CodeMirror-gutters { border-right: none; }
     .banner { background: #ffc; padding: 6px; border-bottom: 2px solid silver;  }
@@ -79,8 +79,11 @@
     color: #2E3D48;
     color: #ccc;
   }
+  #editorContainer {
+    font-size: 12px;
+  }
   .CodeMirror {
-    border-radius: 5px;
+    border-radius: 15px;
     -webkit-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     border: 1px solid #eeeeee;
@@ -115,8 +118,17 @@
   .right-section {
     margin-bottom: 35px;
   }
-  .right-section, #alert-section {
+  .right-section, #alert-section, .toolbar {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+  .toolbar .bootstrap-select {
+    max-width: 100px;
+  }
+
+  .toolbar .bootstrap-select>.dropdown-toggle {
+    padding: 3px 8px;
+    padding-right: 5px;
+    border-radius: 2px;
   }
   #alert-section .alert {
     padding: 8px;
@@ -163,7 +175,7 @@
     padding: 15px 10px;
     font-size: 12px;
     background: #fff;
-    border-radius: 15px;
+    border-radius: 30px;
     -webkit-box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     display: block;
@@ -178,6 +190,10 @@
   }
   #link-copy {
     cursor: pointer;
+    padding: 3px 6px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
   }
   #loader-wrapper {
     position: fixed;

@@ -84,6 +84,7 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
                 break;
             }
         }
+        $(languageSelect).selectpicker();
 
         // get scroll position, to preserve
         let scrollInfo = editor.getScrollInfo();

@@ -16,22 +16,31 @@
 
     <div class="col-md-9 editor-header">
 
-        <div class="row">
+        <div class="row toolbar">
 
             <div id="alert-section" class="col-md-12"></div>
 
-            <div class="col-md-8">
-                <b style="display: inline-block">Document link: </b>
-                <a id="link-copy" type="button" onclick="copyLink()"></a>
+            <div class="col-md-6">
+                <button class="btn btn-default" data-toggle="tooltip" title="Copy link" data-placement="right" id="link-copy" onclick="copyLink()">
+                </button>
             </div>
-            <div class="col-md-4 align-right">
-                <b>Language: </b>
+            <div class="col-md-6 align-right">
+<!--                <b>Language: </b>-->
+                <i class="fa fa-code"></i>
                 <select name="" id="languageSelect">
-                    <option value="" selected>Plain Text</option>
+                    <option value="text">Plain Text</option>
                     <option value="text/html">HTML</option>
                     <option value="text/css">CSS</option>
                     <option value="text/javascript">Javascript</option>
                     <option value="application/json">JSON</option>
+                </select>
+                <i class="fa fa-text-height"></i>
+                <select name="" id="fontSizeSelect" class="selectpicker">
+                    <option value="12px" selected>12 px</option>
+                    <option value="14px">14 px</option>
+                    <option value="16px">16 px</option>
+                    <option value="18px">18 px</option>
+                    <option value="20px">20 px</option>
                 </select>
             </div>
         </div>
@@ -42,7 +51,7 @@
 
 <div class="row">
 
-    <div class="col-md-9">
+    <div class="col-md-9" id="editorContainer">
         <textarea id="beamDocEditor"></textarea>
     </div>
 
