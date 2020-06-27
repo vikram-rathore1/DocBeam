@@ -25,6 +25,15 @@ app
       });
       res.send();
   })
+  .get('/docStore', (req, res) => {
+      let d = docStore.getDocs();
+      let msg = '';
+      for (docId in d) {
+          msg += '<h2>' + docId + '</h2>';
+          msg += '<pre>' + JSON.stringify(d[docId].getLog(), undefined, 2) + '</pre><br/>';
+      }
+      res.send(msg);
+  })
   .get('/:documentId', (req, res) => {
       if (docStore.docExists(req.params.documentId))
           res.render('pages/editor');
