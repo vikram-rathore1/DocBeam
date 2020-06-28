@@ -11,6 +11,7 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
         showCursorWhenSelecting: true,
         cursorHeight: 1,
         styleSelectedText: true,
+        styleActiveLine: {nonEmpty: true},
         cursorBlinkRate: blinkRate,
         viewportMargin: Infinity
     });
