@@ -60,7 +60,13 @@
     .banner div { margin: 0 auto; max-width: 700px; text-align: center; }
     #beamDocTitle { display: block; margin-bottom: 20px; }
     .peer-selection-text { background: #ff7; }
-    .cm-s-cobalt .peer-selection-text { background: #EC7063; }
+    .cm-s-cobalt .peer-selection-text,
+    .cm-s-darcula .peer-selection-text,
+    .cm-s-3024-night .peer-selection-text,
+    .cm-s-monokai .peer-selection-text,
+    .cm-s-nord .peer-selection-text,
+    .cm-s-yonce .peer-selection-text
+    { background: #581845; }
     .peer-cursor {
       border-left: 2px solid;
       padding: 0;

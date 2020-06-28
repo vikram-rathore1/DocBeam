@@ -41,6 +41,29 @@
                     </select>
                 </span>
 
+                <span class="editorOptionsWrapper" data-toggle="tooltip" title="Theme" data-placement="top">
+                    <i class="fa fa-palette"></i>
+                    <select name="" id="themeSelect" class="selectpicker">
+                        <optgroup label="Light">
+                            <option value="default" selected>Default</option>
+                            <option value="idea">Idea</option>
+                            <option value="eclipse">Eclipse</option>
+                            <option value="neo">Neo</option>
+                            <option value="yeti">Yeti</option>
+                            <option value="elegant">Elegant</option>
+                            <option value="3024-day">3024-day</option>
+                        </optgroup>
+                        <optgroup label="Dark">
+                            <option value="darcula">Darcula</option>
+                            <option value="monokai">Monokai</option>
+                            <option value="nord">Nord</option>
+                            <option value="cobalt">Cobalt</option>
+                            <option value="yonce">Yonce</option>
+                            <option value="3024-night">3024-night</option>
+                        </optgroup>
+                    </select>
+                </span>
+
                 <span class="editorOptionsWrapper" id="fontSizeSelectWrapper" data-toggle="tooltip" title="Font Size" data-placement="top">
                     <i class="fa fa-text-height"></i>
                     <select name="" id="fontSizeSelect" class="selectpicker">
@@ -52,14 +75,6 @@
                     </select>
                 </span>
 
-                <span class="editorOptionsWrapper" data-toggle="tooltip" title="Theme" data-placement="top">
-                    <i class="fa fa-palette"></i>
-                    <select name="" id="themeSelect" class="selectpicker">
-                        <option value="default" selected>Default</option>
-                        <option value="3024-day">3024-day</option>
-                        <option value="cobalt">Cobalt</option>
-                    </select>
-                </span>
             </div>
             <div class="col-md-6 align-right">
                 <button class="btn btn-default" data-toggle="tooltip" title="Copy link" data-placement="bottom" id="link-copy" onclick="copyLink()">
