@@ -45,6 +45,8 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
     });
 
     editor.on("cursorActivity", function (ins) {
+        console.log('---------- Dom: Cursor activity fired');
+        console.log('ignore: ' + ignoreCursorActivity);
         if (ignoreCursorActivity) {
             ignoreCursorActivity = false;
             return;
@@ -85,7 +87,7 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
     });
 
     this.refresh = function() {
-        ignoreCursorActivity = true;        // Don't emit next cursor activity to network
+        // ignoreCursorActivity = true;        // Don't emit next cursor activity to network
         // sync title
         // title.value = doc.getTitle();
 
@@ -179,6 +181,8 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
     };
 
     this.showPeerCursorActivity = function(cursorInfo) {
+        console.log('--------- PEER CURSOR: ');
+        console.log(cursorInfo);
         if (cursorInfo.alias === alias) return;     // Do nothing if this is my own cursor from another tab
 
         // Clear old cursor & selection
@@ -230,10 +234,10 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
 
             editor.setOption('theme', theme);
 
-            console.log('currentPeerSelectionClass: ' + currentPeerSelectionClass);
-            console.log('nextPeerSelectionClass: ' + nextPeerSelectionClass);
-            console.log('selections: ');
-            console.log(selections);
+            // console.log('currentPeerSelectionClass: ' + currentPeerSelectionClass);
+            // console.log('nextPeerSelectionClass: ' + nextPeerSelectionClass);
+            // console.log('selections: ');
+            // console.log(selections);
 
             // for (let i = 0; i < selections.length; i++) {
             //     console.log('removing class ' + currentPeerSelectionClass + ' from ');

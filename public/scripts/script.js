@@ -34,7 +34,6 @@ function init() {
 
     socket.on('crdt_changes', function(msg) {
         console.log('Crdt changes:');
-        console.log(msg);
         if (msg.docId !== docId) return;
         doc.applyChanges(msg.changes);
         editor.refresh();
@@ -43,14 +42,12 @@ function init() {
     // React to catch_up event
     socket.on('catch_up', (msg) => {
         console.log('Catch up:');
-        console.log(msg);
         doc.catchUp(msg);
         editor.refresh();
     });
 
     // Peer cursor
     socket.on('cursor_activity', (msg) => {
-        console.log('cursor_activity');
         editor.showPeerCursorActivity(msg);
     });
 
@@ -63,7 +60,6 @@ function init() {
             document.getElementById(alertSectionId).innerHTML = getConnectedAlert();
             setTimeout(() => {
                 document.getElementById(alertSectionId).innerHTML = '';
-                console.log('removed online alert');
             }, 2500);
         }
         else firstConnectionFromTab = false;
