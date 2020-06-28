@@ -90,14 +90,17 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
         // title.value = doc.getTitle();
 
         // sync language
-        let opts = languageSelect.options;
-        for (let i = 0; i < opts.length; i++) {
-            if (opts[i].value === doc.getLanguage()) {
-                languageSelect.selectedIndex = i;
-                break;
-            }
-        }
-        $(languageSelect).selectpicker();
+
+        // let opts = languageSelect.options;
+        // for (let i = 0; i < opts.length; i++) {
+        //     console.log(opts[i]);
+        //     if (opts[i].value === doc.getLanguage()) {
+        //         languageSelect.selectedIndex = i;
+        //         console.log('selected index is ' + i);
+        //         break;
+        //     }
+        // }
+        $(languageSelect).selectpicker('val', doc.getLanguage());
 
         // get scroll position, to preserve
         let scrollInfo = editor.getScrollInfo();
