@@ -79,6 +79,10 @@ io.on('connection', (socket) => {
         console.log('----------------');
         console.log('IN: join_document: ' + JSON.stringify({docId: msg.docId, alias: msg.alias, socketId: socket.id}));
 
+        // todo: Remove this feature later, this is to create document while joining if not exists
+        if (!docStore.docExists(msg.docId))
+            docStore.addDoc(msg.docId, msg.state);
+
         if (docStore.docExists(msg.docId)) {
             socketMap[socket.id] = msg.docId;
             console.log('setting ' + socket.id + ' in socketMap');
