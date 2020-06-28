@@ -59,7 +59,8 @@
     .banner { background: #ffc; padding: 6px; border-bottom: 2px solid silver;  }
     .banner div { margin: 0 auto; max-width: 700px; text-align: center; }
     #beamDocTitle { display: block; margin-bottom: 20px; }
-    .styled-background { background: #ff7; }
+    .peer-selection-text-light { background: #ff7; }
+    .peer-selection-text-dark { background: #EC7063; }
     .peer-cursor {
       border-left: 2px solid;
       padding: 0;
@@ -195,7 +196,7 @@
     -moz-border-radius: 2px;
     border-radius: 2px;
   }
-  #languageSelectWrapper, #fontSizeSelectWrapper {
+  .editorOptionsWrapper {
     display: inline-block;
     margin-right: 10px;
   }

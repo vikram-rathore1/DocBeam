@@ -83,6 +83,7 @@ function init() {
     setLink();
 
     setFontSizeSelection();
+    setThemeSelection();
 
     removeLoader();
 

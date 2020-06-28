@@ -116,6 +116,13 @@ function setFontSizeSelection() {
     });
 }
 
+function setThemeSelection() {
+    let sel = document.getElementById('themeSelect');
+    sel.addEventListener('change', () => {
+        editor.setTheme(sel.value);
+    });
+}
+
 function removeLoader() {
     setTimeout(function(){
         document.getElementById('loader-wrapper').style.display = 'none';
