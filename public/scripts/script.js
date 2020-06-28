@@ -16,6 +16,7 @@ let doc;
 let editor;
 let firstConnectionFromTab = true;
 let offline = false;
+let offlineAlert = false;
 
 function init() {
 
@@ -55,23 +56,28 @@ function init() {
 
     // Emit event to join document, everytime connection is made
     socket.on('connect', () => {
+        offline = false;
         socket.emit('join_document', {docId: docId, state: doc.getStateString(), alias: alias});
-        if (!firstConnectionFromTab && offline) {
-            offline = false;
+        if (offlineAlert) {
+            offlineAlert = false;
             document.getElementById(alertSectionId).innerHTML = getConnectedAlert();
             setTimeout(() => {
                 document.getElementById(alertSectionId).innerHTML = '';
+                console.log('removed online alert');
             }, 2500);
         }
         else firstConnectionFromTab = false;
     });
 
     socket.on('disconnect', () => {
+        offline = true;
         // Show offline alert after 5 seconds of disconnection
         setTimeout(() => {
-            offline = true;
-            document.getElementById(alertSectionId).innerHTML = getDisconnectedAlert();
-        }, 5000);
+            if (offline && !offlineAlert) {
+                offlineAlert = true;
+                document.getElementById(alertSectionId).innerHTML = getDisconnectedAlert();
+            }
+        }, 10000);
     });
 
     setLink();
@@ -84,6 +90,10 @@ function init() {
 
 init();
 
+
+// todo: use this to show chat fast-forward buttons
+// let c = document.getElementById('chat-container');
+// c.addEventListener('scroll', () => { if (c.scrollTop === 0) console.log('top'); if (c.scrollTop + c.clientHeight === c.scrollHeight) console.log('bottom') })
 
 // let params = JSON.stringify({docId: docId, alias: alias});
 // socket = io.connect('', {query: 'params=' + params});
