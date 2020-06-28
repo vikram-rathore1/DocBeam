@@ -135,6 +135,15 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
         }
         collabList.innerHTML = collabListHtml;
 
+        // hide cursors of offline collaborators
+        for (c in cList) {
+            if (!cList[c].online && c in peerCursors) {
+                peerCursors[c].marker.clear();
+                peerCursors[c].selectionMarker.clear();
+                clearInterval(peerCursors[c].interval);
+            }
+        }
+
         // sync chats
         let chats = doc.getChatList();
         let chatHtml = '';
