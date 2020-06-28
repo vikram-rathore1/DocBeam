@@ -15,6 +15,7 @@ let socket = io();
 let doc;
 let editor;
 let firstConnectionFromTab = true;
+let offline = false;
 
 function init() {
 
@@ -55,13 +56,22 @@ function init() {
     // Emit event to join document, everytime connection is made
     socket.on('connect', () => {
         socket.emit('join_document', {docId: docId, state: doc.getStateString(), alias: alias});
-        if (!firstConnectionFromTab)
+        if (!firstConnectionFromTab && offline) {
+            offline = false;
             document.getElementById(alertSectionId).innerHTML = getConnectedAlert();
+            setTimeout(() => {
+                document.getElementById(alertSectionId).innerHTML = '';
+            }, 2500);
+        }
         else firstConnectionFromTab = false;
     });
 
     socket.on('disconnect', () => {
-        document.getElementById(alertSectionId).innerHTML = getDisconnectedAlert();
+        // Show offline alert after 5 seconds of disconnection
+        setTimeout(() => {
+            offline = true;
+            document.getElementById(alertSectionId).innerHTML = getDisconnectedAlert();
+        }, 5000);
     });
 
     setLink();
