@@ -59,8 +59,8 @@
     .banner { background: #ffc; padding: 6px; border-bottom: 2px solid silver;  }
     .banner div { margin: 0 auto; max-width: 700px; text-align: center; }
     #beamDocTitle { display: block; margin-bottom: 20px; }
-    .peer-selection-text-light { background: #ff7; }
-    .peer-selection-text-dark { background: #EC7063; }
+    .peer-selection-text { background: #ff7; }
+    .cm-s-cobalt .peer-selection-text { background: #EC7063; }
     .peer-cursor {
       border-left: 2px solid;
       padding: 0;

@@ -4,18 +4,6 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
 
     let _this = this;       // todo: remove this hack, this is done to access "this" inside languageSelect.addEventListener
 
-    const themes = {
-        'default': {
-            'peerSelectionClass': 'peer-selection-text-light'
-        },
-        '3024-day': {
-            'peerSelectionClass': 'peer-selection-text-light'
-        },
-        'cobalt': {
-            'peerSelectionClass': 'peer-selection-text-dark'
-        }
-    };
-
     let editor = CodeMirror.fromTextArea(textArea, {
         lineNumbers: true,
         mode: doc.getLanguage(),
@@ -231,32 +219,11 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
         });
 
         // Show peer's text selection
-        let peerSelectionClass = themes[editor.getOption('theme')].peerSelectionClass;
-        peerCursors[cursorInfo.alias].selectionMarker = editor.markText(cursorInfo.selection[0], cursorInfo.selection[1], {className: peerSelectionClass});
+        peerCursors[cursorInfo.alias].selectionMarker = editor.markText(cursorInfo.selection[0], cursorInfo.selection[1], {className: 'peer-selection-text'});
     };
 
     this.setTheme = function(theme) {
-        if (theme in themes) {
-            let currentPeerSelectionClass = themes[editor.getOption('theme')].peerSelectionClass;
-            let nextPeerSelectionClass = themes[theme].peerSelectionClass;
-            let selections = document.getElementsByClassName(currentPeerSelectionClass);
-
-            editor.setOption('theme', theme);
-
-            // console.log('currentPeerSelectionClass: ' + currentPeerSelectionClass);
-            // console.log('nextPeerSelectionClass: ' + nextPeerSelectionClass);
-            // console.log('selections: ');
-            // console.log(selections);
-
-            // for (let i = 0; i < selections.length; i++) {
-            //     console.log('removing class ' + currentPeerSelectionClass + ' from ');
-            //     console.log(selections[i]);
-            //     selections[i].classList.remove(currentPeerSelectionClass);
-            //     selections[i].classList.add(nextPeerSelectionClass);
-            //     console.log('adding class ' + nextPeerSelectionClass + ' to ');
-            //     console.log(selections[i]);
-            // }
-        }
+        editor.setOption('theme', theme);
     };
 
     this.getEditorInstance = function() {
