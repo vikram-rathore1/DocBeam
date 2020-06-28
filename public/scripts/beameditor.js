@@ -28,7 +28,7 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
         viewportMargin: Infinity
     });
 
-    let ignoreCursorActivity = false;
+    // let ignoreCursorActivity = false;
 
     let ignoreChangeEvent = false;
 
@@ -45,12 +45,12 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
     });
 
     editor.on("cursorActivity", function (ins) {
-        console.log('---------- Dom: Cursor activity fired');
-        console.log('ignore: ' + ignoreCursorActivity);
-        if (ignoreCursorActivity) {
-            ignoreCursorActivity = false;
-            return;
-        }
+        // console.log('---------- Dom: Cursor activity fired');
+        // console.log('ignore: ' + ignoreCursorActivity);
+        // if (ignoreCursorActivity) {
+        //     ignoreCursorActivity = false;
+        //     return;
+        // }
         socket.emit('cursor_activity', {
             cursorRow: ins.getCursor().line,
             cursorCol: ins.getCursor().ch,
