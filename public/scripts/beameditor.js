@@ -112,16 +112,24 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
         editor.scrollTo(scrollInfo.left, scrollInfo.top);
 
         // sync collab list
-        let collabListHtml = '';
         let cList= doc.getCollaboratorList();
+        let selfLabel = '';
+        let onlineLabels = '';
+        let offlineLabels = '';
         if (cList) {
             for (c in cList) {
                 let color = cList[c].color;
                 let opacity = (cList[c].online) ? '1' : '0.5';
-                collabListHtml += '<span class="label peer-label" style="background: ' + color + '; opacity: ' + opacity + '">' + c + '</span> ';
+                let tooltip = (c === alias) ? 'You' : (cList[c].online) ? c + ': Online' : c + ': Offline';
+                let lbl = `<span class="label peer-label" style="background: ${color}; opacity: ${opacity}" data-toggle="tooltip" title="${tooltip}" data-placement="top">${c}</span> `;
+
+                if (c === alias) selfLabel = lbl;
+                else if (cList[c].online) onlineLabels += lbl;
+                else offlineLabels += lbl;
             }
         }
-        collabList.innerHTML = collabListHtml;
+        collabList.innerHTML = selfLabel + onlineLabels + offlineLabels;
+        $('[data-toggle="tooltip"]').tooltip();
 
         // hide cursors of offline collaborators
         for (c in cList) {
