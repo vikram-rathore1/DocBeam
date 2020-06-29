@@ -64,12 +64,20 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
     chatMessageInput.addEventListener('keypress', function(event) {
         if (event.keyCode === 13) {
             event.preventDefault();
-            // todo: validation length etc
-            let msg = chatMessageInput.value;
+            let msg = urlify(safe_tags_replace(chatMessageInput.value.trim()));
+            chatMessageInput.value = '';
+
+            if (msg.length === 0 || msg.length > 500) return;
+            let oldChats = doc.getChatList();
+            if (
+                oldChats[oldChats.length - 1].sender === alias && oldChats[oldChats.length - 1].message === msg &&
+                oldChats[oldChats.length - 2].sender === alias && oldChats[oldChats.length - 2].message === msg &&
+                oldChats[oldChats.length - 3].sender === alias && oldChats[oldChats.length - 3].message === msg
+            ) return;
+
             doc.pushChat(msg, function(st, ch) {
                 socket.emit('crdt_changes', {docId: docId, changes: ch, alias: alias});
             });
-            chatMessageInput.value = '';
             _this.refresh();
         }
     });
