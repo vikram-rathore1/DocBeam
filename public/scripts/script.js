@@ -93,6 +93,11 @@ init();
 // let c = document.getElementById('chat-container');
 // c.addEventListener('scroll', () => { if (c.scrollTop === 0) console.log('top'); if (c.scrollTop + c.clientHeight === c.scrollHeight) console.log('bottom') })
 
+// todo: when new user joins, everyone emits their cursor positions
+// todo: events reduce
+// todo: duplicate alias check
+// todo: optimize file imports
+
 // let params = JSON.stringify({docId: docId, alias: alias});
 // socket = io.connect('', {query: 'params=' + params});
 
