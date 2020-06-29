@@ -20,7 +20,7 @@
 
             <div id="alert-section" class="col-md-12"></div>
 
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <span class="editorOptionsWrapper" data-toggle="tooltip" title="Language" data-placement="top">
                     <i class="fa fa-code"></i>
                     <select name="" id="languageSelect">
@@ -75,10 +75,16 @@
                     </select>
                 </span>
 
-            </div>
-            <div class="col-md-6 align-right">
-                <button class="btn btn-default" data-toggle="tooltip" title="Copy link" data-placement="bottom" id="link-copy" onclick="copyLink()">
-                </button>
+                <span class="editorOptionsWrapper right-float" style="margin-right: 0;">
+                    <button type="button" class="btn btn-default toolbar-button" id="full-screen-button">
+                        <i class="fa fa-expand-arrows-alt"></i> Full-screen
+                    </button>
+                </span>
+                <span class="editorOptionsWrapper right-float">
+                    <button class="btn btn-default toolbar-button" onclick="copyLink()" id="link-copy">
+                    </button>
+                </span>
+
             </div>
         </div>
 
@@ -110,14 +116,7 @@
 
 </div>
 
-<!--<div class="row">-->
-<!--    <div class="col-md-9 action-buttons">-->
-<!--        <a type="button" class="btn btn-lg btn-default" href="https://devcenter.heroku.com/articles/getting-started-with-nodejs"><span class="glyphicon glyphicon-flash"></span> Create a new document</a>-->
-<!--        <a type="button" class="btn btn-lg btn-primary" href="https://github.com/heroku/node-js-getting-started"><span class="glyphicon glyphicon-download"></span> Join a document</a>-->
-<!--        <input type="text" id="beamDocTitle" class="" placeholder="Document Title" style="display: none;">-->
-<!--    </div>-->
-<!--</div>-->
-
+<div id="snackbar"></div>
 <script src="/scripts/script.js"></script>
 </body>
 </html>

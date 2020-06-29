@@ -242,6 +242,14 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
         editor.setOption('theme', theme);
     };
 
+    this.fullScreen = function() {
+        editor.setOption('fullScreen', !editor.getOption('fullScreen'));
+    };
+
+    this.isFullScreen = function() {
+        return editor.getOption('fullScreen');
+    };
+
     this.getEditorInstance = function() {
         return editor;
     };

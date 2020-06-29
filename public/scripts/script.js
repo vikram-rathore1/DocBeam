@@ -80,6 +80,7 @@ function init() {
 
     setFontSizeSelection();
     setThemeSelection();
+    setFullscreenButton();
 
     removeLoader();
 

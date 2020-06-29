@@ -1,3 +1,5 @@
+let toastTimeout = undefined;
+
 function getPatches(past, present) {
     let dmp = new diff_match_patch();
     let diff = dmp.diff_main(past, present);
@@ -101,6 +103,8 @@ function copyLink() {
     textArea.select();
     document.execCommand('copy');
     document.body.removeChild(textArea);
+
+    toast('Link copied to clipboard');
 }
 
 function setLink() {
@@ -176,4 +180,26 @@ function urlify(text) {
     return text.replace(urlRegex, function(url) {
         return '<a href="' + url + '" target="_blank">' + url + '</a>';
     })
+}
+
+function toast(msg) {
+    let x = document.getElementById('snackbar');
+    x.className = 'show';
+    x.innerHTML = msg;
+    if (toastTimeout !== undefined) clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(function(){
+            x.className = x.className.replace('show', '');
+    }, 4500);
+}
+
+function setFullscreenButton() {
+    document.getElementById('full-screen-button').addEventListener('click', () => {
+        editor.fullScreen();
+        toast('Press ESC to exit full screen mode')
+    });
+    document.addEventListener('keydown', function(e) {
+        if(e.key === 'Escape'){
+            if (editor.isFullScreen()) editor.fullScreen();
+        }
+    });
 }
