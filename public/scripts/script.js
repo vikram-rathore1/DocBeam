@@ -102,6 +102,8 @@ init();
 // socket = io.connect('', {query: 'params=' + params});
 
 // http://collabedit.com/a2k79
+// todo: too many disconnections clutter chat in idle tabs
+// todo: peer cursor lags when I type, it comes in the way
 // todo: auth (browser cache)
 // todo: missed events catchup, offline editing (lossless, sync & merge whenever online)
 // todo: redis, persist doc

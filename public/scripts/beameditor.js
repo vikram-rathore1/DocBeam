@@ -13,7 +13,10 @@ function BeamEditor(doc, socket, languageSelect, title, textArea, collabList, ch
         styleSelectedText: true,
         styleActiveLine: {nonEmpty: true},
         cursorBlinkRate: blinkRate,
-        viewportMargin: Infinity
+        viewportMargin: Infinity,
+        indentWithTabs: true,
+        tabSize: 4,
+        indentUnit: 4
     });
 
     // let ignoreCursorActivity = false;
